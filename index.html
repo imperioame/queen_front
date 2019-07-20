@@ -19,6 +19,7 @@
     <script src="js/jquery.mobile-1.4.5.js"></script>
 
     <script src="js/inicializacion_variables.js"></script>
+    <script src="js/endpoints.js"></script>
 
 
     <!-- Atribución de autoría
@@ -51,13 +52,16 @@ vista 1 - Bienvenida
  -->
         <main role="main" class="ui-content">
 
+            <img src="jqm/images/ajax-loader.gif" alt="carga" id="loader_bienvenida" class="ocultar">
+
             <!-- logeo -->
             <div id="logueo">
                 <h1><img src="imgs/Logo_queen.svg" alt="Logo de la aplicación QUEEN" class="imagen_bienvenida"><br> ¡Hola!</h1>
                 <p id="msj_login">Para comenzar a usar Queen debes acceder con tu cuenta.</p>
+                <p id="msj_response_login"></p>
                 <form id="formulario_acceder_cuenta_existente">
                     <label>Correo electrónico:<input type="email" name="correo" id="login_correo" placeholder="juan@correo.com.ar" required></label>
-                    <label>Contraseña:<input type="password" name="contrasena" id="login_contraseña" required minlength="5"></label>
+                    <label>Contraseña:<input type="password" name="contrasena" id="login_contrasena" required minlength="5"></label>
                     <button type="submit" class="ui-btn-active">Acceder</button>
                 </form>
                 <form id="formulario_crear_cuenta" class="ocultar">

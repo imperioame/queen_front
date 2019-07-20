@@ -1273,7 +1273,18 @@ Recepción de formularios de nuevo elemento / tablero
 $('#formulario_acceder_cuenta_existente').on('submit', function(){
     //Tengo que consultar con DB si el usuario existe y traer los datos que ese usuario tenga
 
-    return false;
+    var correo = $('#login_correo').val();
+    var contrasena = $('#login_contrasena').val();
+
+    $('#loader_bienvenida').removeClass('ocultar');
+
+    //Hacemos la consulta a la bd
+    ep_login(correo, contrasena);
+    //El proceso continúa con la funcion: obtener_datos_de_servidor
+
+    $('#loader_bienvenida').addClass('ocultar');
+
+
 });
 
 //Form de crear cuenta parte 1 - info báscia
@@ -1502,6 +1513,22 @@ function guardar_nuevo_elemento_en_objeto_maestro(objeto_elemento_a_almacenar){
     guardar_datos_en_localstorage();
 };
 
+
+function obtener_datos_de_servidor (response){
+    //Se llama desde el endpoint de logueo.
+    if (response == "401"){
+        $("#msj_response_login").text("Usuario o contraseña incorrectos.");
+    }else{
+        //Solicita los datos que haya de este usuario en la db - los carga y continua a la sig vista
+        
+        //Guardo los datos de logueo en el localstorage
+
+
+        //Redirijo a vista de inicio
+        $.mobile.navigate('#inicio');
+    };
+
+};
 
 function guardar_datos_en_localstorage(){
     console.log('entré para guardar datos en el localstorage');

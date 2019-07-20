@@ -66,6 +66,13 @@ h3 {
 }
 
 /* Seteo de estilos personalizados*/
+
+#loader_bienvenida{
+    position: fixed;
+        top: calc(50% - 23px);
+        left: calc(50% - 23px);
+}
+
 ul {
     list-style-type: none;
 }

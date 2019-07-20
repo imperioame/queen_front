@@ -17,8 +17,24 @@ var mm;
 var yyyy;
 var formato_de_fecha_almacenable;
 var contrasenas_matchean;
+var ep_login;
+var ep_cargar_datos;
+var ep_datos_usuario;
+var ep_crear_usuario;
+
 
 function inicializar_variables(){
+
+    /*
+    ********************************************************************
+    //Rutas de los endpoints 
+    ********************************************************************
+    */
+    ep_login = 'login.php';
+    ep_crear_usuario = 'crear_usuario.php';
+    ep_cargar_datos = 'cargar_datos.php';
+    ep_datos_usuario = 'datos_usuario.php';
+    
         
     i = 0;
     j = 0;
