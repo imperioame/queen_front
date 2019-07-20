@@ -1,0 +1,9 @@
+Alumno: Amé Julián
+carrera: Diseño Multimedial
+materia: Desarrollo de Apps Multiplataforma
+año: 2019
+cuatrimestre: 5to
+comisión: DMN5A
+turno: Noche
+docente: Omar Toyos
+carácter de entrega: segundo parcial

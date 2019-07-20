@@ -1,0 +1,73 @@
+/* Nuevos iconos de botones*/
+
+.ui-icon-lupa:after {
+    background-image: url(../imgs/icons/lupa.svg);
+    background-size: 18px;
+}
+
+.ui-icon-lupaw:after {
+    background-image: url(../imgs/icons/lupa-w.svg);
+    background-size: 18px;
+}
+
+.ui-icon-ajustes:after {
+    background-image: url(../imgs/icons/ajustes.svg);
+    background-size: 18px;
+}
+
+.ui-icon-fijar:after {
+    background-image: url(../imgs/icons/alfiler.svg);
+    background-size: 18px;
+}
+
+.ui-icon-calendario:after {
+    background-image: url(../imgs/icons/calendario.svg);
+    background-size: 18px;
+}
+
+.ui-icon-tableros:after {
+    background-image: url(../imgs/icons/comprobar.svg);
+    background-size: 18px;
+}
+
+.ui-icon-descartar:after {
+    background-image: url(../imgs/icons/cubo-de-basura.svg);
+    background-size: 18px;
+}
+
+.ui-icon-atras:after {
+    background-image: url(../imgs/icons/flecha-hacia-la-izquierda.svg);
+    background-size: 18px;
+}
+
+.ui-icon-atrasw:after {
+    background-image: url(../imgs/icons/flecha-hacia-la-izquierda-w.svg);
+    background-size: 18px;
+}
+
+.ui-icon-estadisticas:after {
+    background-image: url(../imgs/icons/grafico-circular.svg);
+    background-size: 18px;
+}
+
+.ui-icon-acciones:after {
+    background-image: url(../imgs/icons/menu.svg);
+    background-size: 18px;
+}
+
+.ui-icon-accionesw:after {
+    background-image: url(../imgs/icons/menu-w.svg);
+    background-size: 18px;
+}
+
+.ui-icon-hoy:after {
+    background-image: url(../imgs/icons/sol.svg);
+    background-size: 18px;
+}
+
+.ui-icon-agregar:after {
+    background-image: url(../imgs/icons/mas.svg);
+    background-size: 18px;
+}
+
+

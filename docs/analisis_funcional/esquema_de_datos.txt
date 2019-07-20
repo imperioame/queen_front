@@ -1,0 +1,89 @@
+Objeto maestro para guardar en el localstorage:
+objeto_maestro_datos = {
+    es_primera_vez: booleano,
+    ultimo_id_de_tablero: #######,
+    tableros: [] array de objetos (ver tableros),
+    elementos: [] array de objetos (Ver elementos),
+    estados: [] array de objetos (ver estados)
+};
+
+
+objeto maestro de logueo de usuario
+objeto_maestro_usuario = {
+    correo: string,
+    contrasena: string,
+    nombre: string,
+    apellido: string
+}
+
+
+
+---------------------------------------------------------------------
+
+
+Tableros:
+
+Array de objetos.
+
+ej: tableros[obj1{
+                    id_tablero: 1;
+                    titulo: "alfredo";
+                    es_destacado: true;
+                    es_oculto: false;
+                    fecha_creacion: 20/5/2019
+
+}, obj2, obj3]
+
+Objeto Tablero:
+    - id_tablero: num
+    - titulo: str
+    - es_destacado: bool
+    - es_oculto: bool
+    - fecha_creacion: date
+
+
+El array se debe mantener ordenador por fecha_creacion
+el length del array se debe truncar acorde a la cant de elementos
+
+
+
+---------------------------------------------------------------------
+
+Elementos:
+Van a estar absolutamente todos los elementos de todas las tablas de la app
+
+Array de objetos
+
+Ej: elementos[obj1{
+                    indice_elemento: 5
+                    id_tablero: 3
+                    es_lista: true
+                    contenido: "Comprar pantalón nuevo"
+                    status: ""
+                    fecha_deadline: 15/6/19
+                    fecha_creacion 3/5/19
+
+
+}, obj2, obj3]
+
+Objeto Elemento:
+    - indice_elemento: num
+    - id_tablero (ver en tableros): num
+    - es_lista: bool
+    - contenido: str
+    - status: str
+    - fecha_deadline: date
+    - fecha_creacion: date
+
+
+
+---------------------------------------------------------------------
+
+Estados:
+
+Array de objetos
+
+Objeto estado:
+    - titulo
+    - valor: es el referncial al css
+    - color

@@ -1,0 +1,193 @@
+Objetivo:
+App para organización personal
+
+
+Título:
+- Queen - Organizador personal
+
+ícono:
+- Reina de ajedréz
+
+
+**********************************************************************
+Interfáz
+**********************************************************************
+
+Estructura visual:
+- Pantalla principal con las actividades programadas para hoy
+    - Listado de tareas que tengan deadline hoy
+        - Que indique a que tablero le pertenece
+        - Que indique el semáforo para cambiar de status
+- Pantalla listado de tableros
+    - Jumbotrón con buscador
+    - Patron gallery con título y resumen de info
+- Tablero con Listas y elementos
+    - título
+    - Contenido
+    - botón para borrar
+
+- Header con título del tablero posicionado
+
+
+***************
+Vistas
+***************
+
+
+Bienvenida:
+- Msj de Bienvenida
+- consulto nombre
+- Pido foto
+- Tutorial
+
+
+
+Interfaz del sistema (común a todas las vistas):
+- Tab menú en barra inferior
+    - Home
+    - Tableros
+    - Calendario
+    - Settings
+
+- Header:
+    - Botón para buscar (a la derecha)
+    - Con imagen
+
+
+
+Home (Hoy):
+    - Header
+        - Título "Mi día"
+        - Fecha del día de hoy
+    - List view con tareas
+        - Titulo de la tarea
+        - Tablero al que pertenece
+        - Indicador de status
+        - Checkbox para finalizarla
+        - Clickeable para ir al tablero
+
+
+Tableros:
+    - Header
+        - Título "Tableros"
+    - Separador de "Fijados" y "otros"
+    - Gallery
+        - Titulo
+        - Elementos 
+        - Clickeable para expandir
+
+
+Tablero / Elemento particular:
+    - Header
+        - Título del tablero
+        - Breadcrums
+        - Cantidad de elementos / cant de sublistas
+            - Clickeable - abre estadísticas
+        - Botón de back
+    - Elementos
+        - Checkbox
+        - status
+        - Fecha
+        - Elementos antecedentes / precedentes //// No entra en MVP
+        - Sublistas
+        - Clickeable para expandir (se abre en ventana como el tablero)
+
+    - Nuevos elementos
+        - Input de texto 
+        - Checkbox para indicar si es lista o texto
+        - Campo de fecha
+        - Campo de status
+        - Elemento precedentes //// No entra en MVP
+        - Elemento antecedente //// No entra en MVP
+
+    - Botón de opciones arriba a la derecha
+        - boton para borrar
+        - Botón para cambiarle de color
+        - Botón para fijar
+        - Botón de Estadísticas //// No entra en MVP
+
+
+Estadísticas de un tablero / elemento particular  //// No entra en MVP
+    - Cuantos elementos total
+    - Cuantos elementos completos
+    - cuantas sublistas
+    - Días clave
+
+
+
+
+Settings:
+    - Papelera
+    - Tema gráfico de la App
+    - Configuración de status de los elementos
+    - Info del alumno
+        -materia
+        -curso
+        - año
+        - alumno
+        - foto mía
+    - Botón para borrar toda la data de la App
+        - Cofnirmación
+
+
+
+**********************************************************************
+Elementos y funcionalidades
+**********************************************************************
+Elementos:
+    - Tableros de listas
+    - Listas (bullets)
+    - Textos (dentro de las listas y que no sean bullets)
+    - Listas de listas (sublistas)
+    - Imágenes
+
+Funcionalidades requeridas:
+
+- buscadores
+- Destacar / fijar tableros
+
+
+- Swipe para retroceder en jerarquía de vista
+
+- Se debe poder mandar a la papelera tableros enteros
+- Se debe poder acceder a la papelera
+    - Se debe poder recuperar elementos de la papelera
+    - Se debe poder borrar definitivamente elementos de la papelera
+
+- Qué se pueda poner una fecha al elementos
+- Que se puede poner un status al elemento:
+    - Nuevo
+    - Pendiente
+    - En progreso
+    - Realizado
+
+
+- Se debe permitir incluir elementos precedentes o antecedentes desde el settings del elemento
+    - se debe visualizar de alguna forma en el tablero - en el elemento
+    - se debe poder elegir elementos de otros tableros
+
+-------------------- En caso de que el elemento no tenga fecha, status o antec/prec - no debe mostrarlos
+
+- Que se pueda setear status personalizados
+- Que se pueda seleccionar temas gráficos (al menos 3 o 4)
+- Se puede setear un color de fondo personalizado por cada tablero
+    - En los settings (o en el header) del tablero un cuadradito de color
+        - Si se selecciona el cuadradito se muestra todos los colores
+        - El usuario elige el color
+
+
+- Se debe poder chequear elementos realizados
+    - Habrá un checkbox
+    - Los elementos chequeados tendrán el estado "Realizado"
+    - Se los separará visualmente del resto de los elementos
+    - Si se los vuelve a chequear, se debe "recuperar el elemento"
+        - debe visualizarse como los demás elementos
+        - Debe sacarse el chequeo del checkbox
+
+- Se debe permitir incluir un ícono como imagen del bullet.
+
+- Los elementos deben tener un setting para verlo grande y agregarle atributos u otra cosas
+    - Se ve en pantalla
+
+
+- Estadísticas de los elementos

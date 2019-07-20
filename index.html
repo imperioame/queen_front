@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Queen</title>
+
+    <link rel="stylesheet" href="js/jquery.mobile-1.4.5.css">
+    <link rel="stylesheet" href="css/fuentes.css">
+    <link rel="stylesheet" href="css/iconos_personalizados.css">
+    <link rel="stylesheet" href="css/estilos.css">
+
+    <link rel="shortcut icon" href="imgs/queen_favicon.png" type="image/x-icon">
+
+    <script src="js/jquery-1.12.3.min.js"></script>
+    <script src="js/jquery.mobile-1.4.5.js"></script>
+
+    <script src="js/inicializacion_variables.js"></script>
+
+
+    <!-- Atribución de autoría
+Íconos:
+<div>Icons made by <a href="https://www.flaticon.es/autores/gregor-cresnar" title="Gregor Cresnar">Gregor Cresnar</a> from <a href="https://www.flaticon.es/" 			    title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" 			    title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></div>
+<div>Icons made by <a href="https://www.flaticon.es/autores/gregor-cresnar" title="Gregor Cresnar">Gregor Cresnar</a> from <a href="https://www.flaticon.es/"                 title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/"                 title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></div>
+
+-->
+
+
+</head>
+
+<body>
+
+    <!-- ******************************************************************************************
+vista 1 - Bienvenida
+******************************************************************************************
+-->
+    <div data-role="page" id="bienvenida">
+<!-- 
+        <header data-role="header">
+
+            <div class="degrade_de_fondo_header"></div>
+            <div class="header_texto">
+                <h1>Mi Día</h1>
+                <p class="descripcion_del_header"></p>
+            </div>
+
+        </header>
+ -->
+        <main role="main" class="ui-content">
+
+            <!-- logeo -->
+            <div id="logueo">
+                <h1><img src="imgs/Logo_queen.svg" alt="Logo de la aplicación QUEEN" class="imagen_bienvenida"><br> ¡Hola!</h1>
+                <p id="msj_login">Para comenzar a usar Queen debes acceder con tu cuenta.</p>
+                <form id="formulario_acceder_cuenta_existente">
+                    <label>Correo electrónico:<input type="email" name="correo" id="login_correo" placeholder="juan@correo.com.ar" required></label>
+                    <label>Contraseña:<input type="password" name="contrasena" id="login_contraseña" required minlength="5"></label>
+                    <button type="submit" class="ui-btn-active">Acceder</button>
+                </form>
+                <form id="formulario_crear_cuenta" class="ocultar">
+                    <label>Correo electrónico: <input type="email" name="correo" id="crear_correo" placeholder="juan@correo.com.ar" required></label>
+                    <label>Contraseña: <input type="password" name="contrasena" id="crear_contrasena" required minlength="5"></label>
+                    <label>Repetir contraseña: <input type="password" name="contrasena" id="repetir_contrasena" required minlength="5"></label>
+                    <p id="mensaje_error_repetir_contrasena" class="ocultar">Las contraseñas deben coincidir.</p>
+                    <button type="submit" class="ui-btn-active">Crear</button>
+                </form>
+
+                <p id="msj_mas_informacion" class="ocultar">Estás a un paso de comenzar. Por favor, coméntanos un poco más sobre ti.</p>
+
+                <form id="formulario_mas_informacion" class="ocultar">
+                    <label>Nombre: <input type="text" name="nombre" id="crear_nombre" placeholder="Juan" required></label>
+                    <label>Apellido: <input type="text" name="apellido" id="crear_apellido" placeholder="Pérez" required></label>
+                    <button type="submit" class="ui-btn-active">Siguiente</button>
+                </form>
+
+                <a href="#" id="crear_cuenta" data-role="button">Crear cuenta</a>
+                <a href="#" id="acceder_cuenta" data-role="button" class="ocultar">Acceder a cuenta</a>
+            </div>
+            <!-- Mensaje de bienvenida -->
+            <div id="msj_bienvenida" class="ocultar">
+                <h1><img src="imgs/icons/avatar.svg" alt="Imagen de usuario" class="imagen_bienvenida">
+                <br> Bienvenido </h1>
+                <p><strong>Queen</strong> es una herramienta de gestión personal. <br> Aquí podras hacer <strong>tableros</strong> con notas y listas de tareas. <br> A tu contenido podrás asignarle un estado y una fecha límite.</p>
+                <a href="#inicio" data-role="button" class="ui-btn-active" id="bienvenida_comenzar">¡Comenzar!</a>
+            </div>
+
+            
+
+        </main>
+
+    </div>
+
+
+    <!-- ******************************************************************************************
+vista 2 - INICIO
+******************************************************************************************
+-->
+    <div data-role="page" id="inicio">
+
+        <header data-role="header">
+            <!-- Botón de buscdor  -->
+            <a href="#inicio_buscador" data-role="button" data-rel="popup" data-transition="pop"
+                data-position-to="origin" data-icon="lupaw" data-iconshadow="false" data-iconpos="notext"
+                class="ui-btn-right boton_buscar">Buscador</a>
+            <!-- Popup buscador -->
+            <div class="header_buscador" id="inicio_buscador" data-role="popup" data-history="false">
+                <form>
+                    <input data-type="search" id="buscador_de_inicio" placeholder="¿Qué buscas?">
+                </form>
+            </div>
+
+            <div class="degrade_de_fondo_header"></div>
+            <div class="header_texto">
+                <h1>Mi Día</h1>
+                <p class="descripcion_del_header"></p>
+            </div>
+
+        </header>
+
+        <main role="main" class="ui-content">
+
+            <!-- A mostrar en caso de que el usuario no tenga taréas en el día -->
+            <div id="dia_libre" class="aviso_de_vista_vacia">
+                <h1>¡Día Libre!</h1>
+                <h2>No tenés tareas programadas para hoy</h2>
+            </div>
+
+            <form>
+            </form>
+            <!-- Listview por javascript - se crean los elementos que tenga para hacer hoy-->
+            <!-- <ul data-role="listview" data-filter="true" data-input="#buscador_de_inicio"> -->
+                <!-- 
+                    Modelo de datos del listview de inicio
+                <li class="ui-li-icon">
+                    <a href="">
+                        <input class="listview_inicio_checkbox" type="checkbox" value="Realizado">
+
+                        <div class="listview_inicio_bloque_de_texto">
+                            <h2>Titulo de la tarea a realizar</h2>
+                            <p>En que tablero se encuentra</p>
+                        </div>
+
+                        <div class="ui-li-aside listview_inicio_estado estado_nuevo">
+                            <p>n</p>
+                        </div>
+
+                    </a>
+                </li> -->
+            <!-- </ul> -->
+
+        </main>
+
+        <footer data-role="footer" data-position="fixed">
+            <div data-role="navbar">
+                <ul>
+                    <li><a href="#inicio" data-icon="hoy" class="ui-btn-active ui-state-persist">Mi día</a></li>
+                    <li><a href="#tableros" data-icon="tableros">Tableros</a></li>
+                    <!-- <li><a href="#calendario" data-icon="calendario">Calendario</a></li>-->
+                    <li><a href="#ajustes" data-icon="ajustes">Ajustes</a></li>
+                </ul>
+            </div>
+        </footer>
+
+    </div>
+
+    <!-- ******************************************************************************************
+vista 3 - TABLEROS
+******************************************************************************************
+-->
+
+    <div data-role="page" id="tableros">
+
+        <header data-role="header">
+            <!-- Botón de buscdor  -->
+            <a href="#tableros_buscador" data-role="button" data-rel="popup" data-transition="pop"
+                data-position-to="origin" data-icon="lupaw" data-iconshadow="false" data-iconpos="notext"
+                class="ui-btn-right boton_buscar">Buscador</a>
+            <!-- Popup buscador -->
+            <div class="header_buscador" id="tableros_buscador" data-role="popup" data-history="false">
+                <form>
+                    <input data-type="search" id="buscador_de_tableros" placeholder="¿Qué buscas?">
+                </form>
+            </div>
+
+            <div class="degrade_de_fondo_header"></div>
+            <div class="header_texto">
+                <h1>Tableros</h1>
+                <p class="descripcion_del_header"></p>
+            </div>
+        </header>
+
+        <main role="main" class="ui-content">
+
+            <!-- Botón para agrgar tableros - todo por js -->
+            <div class="agregar">
+            </div>
+
+            <!-- A mostrar en caso de que el usuario no tenga tableros activos -->
+            <div id="sin_tableros" class="aviso_de_vista_vacia">
+                <h1>Nada por aquí.</h1>
+                <h2>¡Presioná el botón <strong>+</strong> para crear un tablero!</h2>
+            </div>
+
+
+            <!-- Patron de gallery para los tableros -->
+            <!-- sección para los fijados -->
+            <section id="tableros_fijados">
+                <h2>Fijados:</h2>
+
+
+                <div class="ui-grid-a">
+                    <div class="ui-block-a">
+                        <!-- inicio bloque del lado izq de la gallery -->
+
+                        <!-- Esquema de HTML del tablero
+
+                        <div class="tablero">
+                            <a href="#esto_es_un_titulo_de_card">
+                                <h2>Esto es un Título de Card</h2>
+                                <div>
+                                    <ul>
+                                        <li>contenido 1</li>
+                                        <li>contenido 2</li>
+                                        <li>contenido 3</li>
+                                        <li>contenido 4</li>
+                                        <li>contenido 5</li>
+                                    </ul>
+                                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Temporibus corrupti at
+                                        atque
+                                        cupiditate? Sit repellat eligendi voluptas consequatur ipsa similique deserunt
+                                        aliquam
+                                        totam, excepturi libero, quaerat ipsam unde, beatae iusto.</p>
+                                    <ul>
+                                        <li>contenido 6</li>
+                                        <li>Lorem, ipsum dolor.</li>
+                                        <li>Lorem, ipsum dolor.</li>
+                                    </ul>
+                                </div>
+                            </a>
+                        </div>
+
+ -->
+                    </div>
+                    <div class="ui-block-b">
+                    </div>
+
+                </div>
+            </section>
+
+            <!-- sección para los otros -->
+
+            <section id="otros_tableros">
+                <h2>Otros:</h2>
+
+                <div class="ui-grid-a">
+                    <div class="ui-block-a" data-filter="true" data-input="#buscador_de_tableros">
+
+                    </div>
+
+                    <div class="ui-block-b" data-filter="true" data-input="#buscador_de_tableros">
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+        </main>
+
+        <footer data-role="footer" data-position="fixed">
+            <div data-role="navbar">
+                <ul>
+                    <li><a href="#inicio" data-icon="hoy">Mi día</a></li>
+                    <li><a href="#tableros" data-icon="tableros" class="ui-btn-active ui-state-persist">Tableros</a></li>
+                    <!-- <li><a href="#calendario" data-icon="calendario">Calendario</a></li>-->
+                    <li><a href="#ajustes" data-icon="ajustes">Ajustes</a></li>
+                </ul>
+            </div>
+        </footer>
+
+
+
+        <div class="menu_agregar_tablero">
+            <div class="bajar">
+                <h3>Esconder Panel</h3>
+            </div>
+            <form>
+                <input type="text" value="" placeholder="Titulo" autofocus id="titulo_tablero" required>
+
+                <input type="submit" value="Guardar">
+            </form>
+        </div>
+
+    </div>
+
+
+    <!-- ******************************************************************************************
+vista 4 - Ajustes
+******************************************************************************************
+-->
+    <div data-role="page" id="ajustes">
+
+        <header data-role="header">
+            <!-- Botón de buscdor  -->
+            <a href="#ajustes_buscador" data-role="button" data-rel="popup" data-transition="pop"
+                data-position-to="origin" data-icon="lupaw" data-iconshadow="false" data-iconpos="notext"
+                class="ui-btn-right boton_buscar">Buscador</a>
+            <!-- Popup buscador -->
+            <div class="header_buscador" id="ajustes_buscador" data-role="popup" data-history="false">
+                <form>
+                    <input data-type="search" id="buscador_de_ajustes" placeholder="¿Qué buscas?">
+                </form>
+            </div>
+
+            <div class="degrade_de_fondo_header"></div>
+            <div class="header_texto">
+                <h1>Ajustes</h1>
+                <p class="descripcion_del_header"></p>
+            </div>
+        </header>
+
+        <main role="main" class="ui-content">
+
+
+            <!-- 
+            Acá se debe visualizar los tablero ocultados, se deben poder recuperar o borrar
+
+         -->
+
+            <ul data-role="listview" data-filter="true" data-input="#buscador_de_ajusts">
+                <!-- esto se rellena desde js -->
+            </ul>
+
+            <div class="botones_de_acciones" data-role="controlgroup">
+
+                <!-- Información del alumno -->
+                <a href="#acerca_de" data-rel="popup" data-position-to="window" class="ui-btn ui-shadow">Acerca del
+                    Alumno</a>
+
+                <!-- BOrrar todo -->
+                <a href="#popup_confirmacion_borrar" data-rel="popup" data-position-to="window"
+                    class="ui-btn ui-shadow boton_eliminar color_rojo">Borrar caché</a>
+
+                <div data-role="collapsible" id="lista_de_borradores">
+                    <h2>Tableros en borrador</h2>
+
+
+
+                </div>
+
+            </div>
+
+        </main>
+
+        <footer data-role="footer" data-position="fixed">
+            <div data-role="navbar">
+                <ul>
+                    <li><a href="#inicio" data-icon="hoy">Mi día</a></li>
+                    <li><a href="#tableros" data-icon="tableros">Tableros</a></li>
+                    <!-- <li><a href="#calendario" data-icon="calendario">Calendario</a></li>-->
+                    <li><a href="#ajustes" data-icon="ajustes" class="ui-btn-active ui-state-persist">Ajustes</a></li>
+                </ul>
+            </div>
+        </footer>
+
+        <!-- Popup para info del alumno -->
+        <div data-role="popup" id="acerca_de" data-overlay-theme="b">
+            <a href="#" data-rel="back"
+                class="ui-btn ui-corner-all ui-shadow ui-btn-a ui-icon-delete ui-btn-icon-notext ui-btn-right">Cerrar</a>
+
+                <div role="main" class="ui-content">
+                <h1 class="img_de_perfil">
+                    <img src="imgs/julian_ame.jpg" alt="Foto del desarrollador">
+                </h1>
+
+                <h2>Alumno:</h2>
+                <h1>Julián Amé </h1>
+
+                <h2>Información:</h2>
+                <ul>
+                    <li>Desarrollo de Aplicaciones Multiplataforma</li>
+                    <li>Docente: Omar Toyos</li>
+                    <li>DMN5A</li>
+                    <li>2019</li>
+                </ul>
+            </div>
+
+        </div>
+
+
+        <!-- Popup para borrar toda la info de la app -->
+        <div data-role="popup" id="popup_confirmacion_borrar" data-overlay-theme="b">
+                <div data-role="header">
+                    <h1>¿Borrar Caché?</h1>
+                    </div>
+                <div role="main" class="ui-content">
+                        <h2 class="ui-title">¿Está seguro de borrar el caché?</h2>
+                        <p>Esto borrará la información almacenada de la aplicación. Esta acción no se puede deshacer.
+                    </p>
+                            <a href="#" class="ui-btn ui-corner-all ui-shadow ui-btn-inline ui-btn-b"
+                        data-rel="back">Cancelar</a>
+                            <a href="#" id="borrar_todo"
+                        class="ui-btn ui-corner-all ui-shadow ui-btn-inline ui-btn-b color_rojo"
+                        data-transition="flow">Borrar</a>
+                        </div>
+        </div>
+
+
+    </div>
+
+
+
+    <!-- ******************************************************************************************
+vistas 5+ - TABLERO PARTICULAR
+******************************************************************************************
+-->
+
+    <!-- Esquema de datos de los tableros -->
+    <div data-role="page" id="esto_es_un_titulo_de_card" class="tablero_particular">
+
+        <header data-role="header">
+            <!-- Botón de buscdor  -->
+            <a href="#tableros_buscador" data-role="button" data-rel="popup" data-transition="pop"
+                data-position-to="origin" data-icon="lupaw" data-iconshadow="false" data-iconpos="notext"
+                class="ui-btn-right boton_buscar">Buscador</a>
+            <!-- Popup buscador -->
+            <div class="header_buscador" id="tableros_buscador" data-role="popup" data-history="false">
+                <input type="text" value="" placeholder="¿Qué buscas?">
+            </div>
+
+            <!-- Botón de acciones -->
+
+            <a href="#tableros_acciones" data-role="button" data-rel="popup" data-transition="pop"
+                data-position-to="origin" data-icon="accionesw" data-iconshadow="false" data-iconpos="notext"
+                class="ui-btn-right">Acciones</a>
+
+            <!-- Popup acciones -->
+
+            <div class="header_acciones" id="tableros_acciones" data-role="popup" data-history="false">
+                <a href="#" data-role="button" data-icon="descartar" data-iconshadow="false" data-iconpos="notext"
+                    class="descartar">Descartar</a>
+                <a href="#" data-role="button" data-icon="" data-iconshadow="false" data-iconpos="notext"
+                    class="cambiar_color">Cambiar color</a>
+                <a href="#" data-role="button" data-icon="" data-iconshadow="false" data-iconpos="notext"
+                    class="fijar">Fijar tablero</a>
+                <a href="#" data-role="button" data-icon="" data-iconshadow="false" data-iconpos="notext"
+                    class="estadisticas">Ver estadísticas</a>
+            </div>
+
+
+            <!-- Botón de back -->
+
+            <a href="#" data-rel="back" data-icon="atrasw" data-iconpos="notext" class="ui-btn-left">atras</a>
+
+            <div class="header_texto">
+                <h1>Esto es un Título de Card</h1>
+                <p class="descripcion_del_header"></p>
+            </div>
+        </header>
+
+        <main role="main" class="ui-content">
+
+            <!-- Botón para agrgar tableros - todo por js -->
+            <div class="agregar">
+            </div>
+
+            <!-- A mostrar en caso de que el usuario no tenga contenido en el tablero -->
+            <div class="aviso_de_vista_vacia">
+                <h1>Nada por aquí.</h1>
+                <h2>¡Presioná el botón <strong>+</strong> para agregar contenido!</h2>
+            </div>
+
+
+            <!-- sin patrón específico para visualizar el contenido de los tableros -->
+
+
+            <ul>
+                <li>
+                    <div class="elemento">
+                        <input type="checkbox" value="Realizado">
+                        <p class="contenido_elemento">contenido 1</p>
+                        <div class="props">
+                            <div class="estado_elemento estado_nuevo"></div>
+                            <div class="deadline"><img src="imgs/icons/calendario.svg" alt="Fecha límite"></div>
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <div class="elemento">
+                        <input type="checkbox" value="Realizado">
+                        <p class="contenido_elemento">contenido 2</p>
+                        <div class="props">
+                            <div class="estado_elemento estado_nuevo"></div>
+                            <div class="deadline ocultar"><img src="imgs/icons/calendario.svg" alt="Fecha límite"></div>
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <div class="elemento">
+                        <input type="checkbox" value="Realizado">
+                        <p class="contenido_elemento">contenido 3</p>
+                        <div class="props">
+                            <div class="estado_elemento estado_nuevo"></div>
+                            <div class="deadline"><img src="imgs/icons/calendario.svg" alt="Fecha límite"></div>
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <div class="elemento">
+                        <input type="checkbox" value="Realizado">
+                        <p class="contenido_elemento">contenido 4</p>
+                        <div class="props">
+                            <div class="estado_elemento estado_nuevo ocultar"></div>
+                            <div class="deadline ocultar"><img src="imgs/icons/calendario.svg" alt="Fecha límite"></div>
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <div class="elemento">
+                        <input type="checkbox" value="Realizado">
+                        <p class="contenido_elemento">contenido 5</p>
+                        <div class="props">
+                            <div class="estado_elemento estado_nuevo ocultar"></div>
+                            <div class="deadline"><img src="imgs/icons/calendario.svg" alt="Fecha límite"></div>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Temporibus corrupti at
+                atque
+                cupiditate? Sit repellat eligendi voluptas consequatur ipsa similique deserunt
+                aliquam
+                totam, excepturi libero, quaerat ipsam unde, beatae iusto.</p>
+            <ul>
+                <li>contenido 6</li>
+                <li>Lorem, ipsum dolor.</li>
+                <li>Lorem, ipsum dolor.</li>
+            </ul>
+
+
+
+        </main>
+
+        <footer data-role="footer" data-position="fixed">
+            <div data-role="navbar">
+                <ul>
+                    <li><a href="#inicio" data-icon="hoy">Mi día</a></li>
+                    <li><a href="#tableros" data-icon="tableros">Tableros</a></li>
+                    <li><a href="#calendario" data-icon="calendario">Calendario</a></li>
+                    <li><a href="#ajustes" data-icon="ajustes">Ajustes</a></li>
+                </ul>
+            </div>
+        </footer>
+
+
+        <div class="menu_agregar_elemento">
+            <div class="bajar">
+                <h3>Esconder Panel</h3>
+            </div>
+            <form>
+                <input type="text" value="" placeholder="Titulo" required>
+
+                <label for="es_lista">¿Es elemento de lista?</label>
+                <input type="checkbox" name="es_lista" id="es_lista">
+
+                <select name="status">
+                    <option value="">Status</option>
+                    <option value="Nuevo">Nuevo</option>
+                </select>
+
+                <h3>Fecha límite</h3>
+                <input type="date" name="Fecha límite">
+
+                <input type="submit" value="Guardar">
+            </form>
+        </div>
+
+
+
+    </div>
+    <!-- FIN Esquema de datos de los tableros -->
+
+
+    <script src="js/index.js"></script>
+</body>
+
+</html>

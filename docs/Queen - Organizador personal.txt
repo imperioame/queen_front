@@ -1,0 +1,5 @@
+Queen - Organizador personal
+
+App de organización personal / herramienta de gestión
+Permite al usuario organizar sus tareas y hacer notas de forma simple.
+Trae funcionalidades de organización como asignación de fechas y estado a las tareas
