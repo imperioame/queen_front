@@ -177,6 +177,19 @@ function crear_contenido_en_vista_de_tablero(objeto_de_elementos){
 
 };
 
+function procesar_tableros(){
+//Gestiona todo el proceso de tableros - de todos los tableros
+console.log("Estoy creando las vistas de los de tableros");
+
+    for (i in objeto_maestro_datos.tableros){
+        crear_vista_de_tablero(objeto_maestro_datos.tableros[i]);
+    };
+
+    //Por ultimo, luego de levantar la info, cargo los tableros en la vista de TABLEROS
+    procesar_tableros_en_vista_de_tableros();
+
+};
+
 function crear_vista_de_tablero(objeto_tablero, forzar_creacion){
     //solo creo tableros para los que no estén ocultos
     if(!objeto_tablero.es_oculto || forzar_creacion == true){
@@ -1511,23 +1524,6 @@ function guardar_nuevo_elemento_en_objeto_maestro(objeto_elemento_a_almacenar){
 
     //Guardo en localstorage
     guardar_datos_en_localstorage();
-};
-
-
-function obtener_datos_de_servidor (response){
-    //Se llama desde el endpoint de logueo.
-    if (response == "401"){
-        $("#msj_response_login").text("Usuario o contraseña incorrectos.");
-    }else{
-        //Solicita los datos que haya de este usuario en la db - los carga y continua a la sig vista
-        
-        //Guardo los datos de logueo en el localstorage
-
-
-        //Redirijo a vista de inicio
-        $.mobile.navigate('#inicio');
-    };
-
 };
 
 function guardar_datos_en_localstorage(){

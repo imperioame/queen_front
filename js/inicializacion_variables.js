@@ -118,35 +118,8 @@ $(document).on('ready', function () {
 
         objeto_maestro_datos.es_primera_vez = false;
 
-        //Me anticipo ordenando el array de elementos por id_tablero
-            //La función comparar_elementos_por_tablero está definida en index.js
-            //objeto_maestro_datos.elementos.sort( comparar_elementos_por_tablero );   
-
-        for (i in objeto_maestro_datos.tableros){
-            console.log("Estoy creando las vistas de los de tableros");
-            /* Del objeto, tableros me define las vistas que tengo que crear, y el contenido qeu 
-            tengo que meter en la vista de "Tableros" */
-
-            //la función está definido en index.js - crea los html para la vista del tablero - no llena de contenido
-            crear_vista_de_tablero(objeto_maestro_datos.tableros[i]);
-
-            /* SE REDEFINIÓ LA LÓGICA : LA FUNCIÓN crear_vista_de_tablero POPULA SU PROPIO TABLERO
-            //ahora lleno las vistas que cree con los elementos que les corresponda
-            for (j in objeto_maestro_datos.elementos){
-                console.log("Estoy buscando los datos que le correspondan a las vistas de tableros");
-                    // De este objeto traigo todos los elementos para incluirlos en la vista recien creada
-                    //para eso tengo que filtrar los que correspondan al id de este tablero particular 
-
-                    //la función está definida en index.js - crea el html que corresponda para el contenido en el tablero
-                    crear_contenido_en_vista_de_tablero(objeto_maestro_datos.elementos[j]);
-                    
-            };*/
-        };
-
-
-        //Por ultimo, luego de levantar la info, cargo los tableros en la vista de TABLEROS
-        procesar_tableros_en_vista_de_tableros();
-
+        //Creo las vistas - las lleno de datos - cargo los tableros en la vista de tableros
+        procesar_tableros();
         
         //Hay datos guardados = usuario ya logueado
         //Salteo la página de bienvenida
