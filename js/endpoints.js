@@ -99,7 +99,7 @@ function confirmacion_creacion_usuario(response){
     };
 };
 
-function ep_cargar_datos(correo_usuario, datos_a_cargar){
+function ep_cargar_tablero(correo_usuario, datos_a_cargar){
     $.post(ep_cargar_datos, {correo: correo_usuario, datos: datos_a_cargar}, "json")
     .fail(function() {
         alert("Hubo un error en la comunicación con el servidor");

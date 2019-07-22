@@ -32,7 +32,7 @@ function inicializar_variables(){
     */
     ep_login = 'localhost/login.php';
     ep_crear_usuario = 'localhost/crear_usuario.php';
-    ep_cargar_datos = 'localhost/cargar_datos.php';
+    ep_cargar_tablero = 'localhost/cargar_tablero.php';
     ep_datos_usuario = 'localhost/datos_usuario.php';
     ep_cargar_elemento = 'localhost/cargar_elemento.php';
     
