@@ -105,3 +105,13 @@ function ep_cargar_datos(correo_usuario, datos_a_cargar){
         alert("Hubo un error en la comunicación con el servidor");
     });
 };
+
+function ep_cargar_elemento(objeto_de_elemento){
+    $.post(ep_cargar_elemento, {elemento: objeto_de_elemento}, "json")
+    .done(function(response){
+        return response;
+    })
+    .fail(function() {
+        return '-1';
+    });
+};
