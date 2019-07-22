@@ -1109,8 +1109,8 @@ $('body').on('vclick','.fijar',function(){
         }
     };
 
-    //Guardo los datos en el localstorage
-    guardar_datos_en_localstorage();
+    //Guardo los datos en bd y local
+    almacenar_cambios();
 
     //Recargo página de tableros
     procesar_tableros_en_vista_de_tableros();
@@ -1154,8 +1154,8 @@ $('body').on('vclick','.descartar',function(){
             };
         };
     };
-    //Guardo los datos en el localstorage
-    guardar_datos_en_localstorage();
+    //Guardo los datos en bd y local
+    almacenar_cambios();
 
     //Lo cargo en la lista de papelera dentro de Ajustes:
     cargar_lista_de_borradores();
@@ -1200,8 +1200,8 @@ $('body').on('vclick','.borrar_un_tablero_del_sistema',function(){
 
         
 
-        //Guardo los datos en el localstorage
-        guardar_datos_en_localstorage();
+        //Guardo los datos en bd y local
+        almacenar_cambios();
 
         //Recargo página de tableros
         procesar_tableros_en_vista_de_tableros();
@@ -1231,8 +1231,8 @@ $('body').on('vclick','.tablero_particular .boton_recuperar',function(){
         };
     };
 
-        //Guardo los datos en el localstorage
-        guardar_datos_en_localstorage();
+        //Guardo los datos en bd y local
+        almacenar_cambios();
 
         //Recargo página de tableros
         procesar_tableros_en_vista_de_tableros();
@@ -1308,10 +1308,7 @@ $('#formulario_crear_cuenta').on('submit', function(){
         objeto_maestro_usuario.contrasena = $('#formulario_crear_cuenta #crear_contrasena').val();
         //no los mando a db porque todavía le falta completar el resto de la info
 
-        //Vacío los campos
-        $('#formulario_crear_cuenta #crear_correo').val('');
-        $('#formulario_crear_cuenta #crear_contrasena').val('');
-        $('#formulario_crear_cuenta #repetir_contrasena').val('');
+        //No vacío los campos por las dudas que el correo ya exista
 
         //Configuro lo que se debe ver
         $('#formulario_crear_cuenta').addClass('ocultar');
@@ -1319,6 +1316,7 @@ $('#formulario_crear_cuenta').on('submit', function(){
         $('#formulario_mas_informacion').removeClass('ocultar');
         $('#acceder_cuenta').addClass('ocultar');
         $('#msj_login').addClass('ocultar');
+        
     };
     return false;
 });
@@ -1331,13 +1329,7 @@ $('#formulario_mas_informacion').on('submit', function(){
     guardar_usuario_en_localstorage();
     
     //Mando todo a la db para finalizar la creación de usuario
-
-
-
-
-    //Vacío los campos
-    $('#formulario_crear_cuenta #crear_nombre').val('');
-    $('#formulario_crear_cuenta #crear_apellido').val('');
+    ep_crear_usuario(objeto_maestro_usuario.correo, objeto_maestro_usuario.contrasena, objeto_maestro_usuario.nombre, objeto_maestro_usuario.apellido);
 
 
     //vuelvo a setear la visibilidad de los formularios como estaba
@@ -1429,6 +1421,7 @@ $('body').on('submit', '.tablero_particular .menu_agregar_elemento form',functio
 
 
     var objeto_elementos_a_almacenar = {
+        id_elemento: objeto_maestro_datos.elementos.length,
         indice_elemento: indice_elemento,
         id_tablero: id_tablero_para_guardar,
         es_lista: es_lista,
@@ -1504,8 +1497,8 @@ function guardar_nuevo_tablero_en_objeto_maestro(titulo_tablero){
     objeto_maestro_datos.ultimo_id_de_tablero = id_de_nuevo_tablero;
 
 
-    //Guardo en localstorage
-    guardar_datos_en_localstorage();
+    //Guardo en bd y local
+    almacenar_cambios();
 
 
     //Devuelvo por return el subobjeto creado, para utilizarse en lo que sea
@@ -1522,8 +1515,8 @@ function guardar_nuevo_elemento_en_objeto_maestro(objeto_elemento_a_almacenar){
     //Defino su id:
     objeto_maestro_datos.elementos[objeto_maestro_datos.elementos.length] = objeto_elemento_a_almacenar;
 
-    //Guardo en localstorage
-    guardar_datos_en_localstorage();
+    //Guardo datos en bd y local
+    almacenar_cambios();
 };
 
 function guardar_datos_en_localstorage(){
@@ -1532,10 +1525,21 @@ function guardar_datos_en_localstorage(){
     //Stringifico los datos
     var datos_a_guardar = JSON.stringify( objeto_maestro_datos );
 
-
     //Pusheo los datos al locaslstorage
     localStorage.setItem('datos_app', datos_a_guardar);
+
+    //
 };
+
+function almacenar_cambios(){
+    //Esta función almacena en db.
+    //1) Conecta con endpoint cargar_datos
+    //2) guarda en localstorage una cópia
+    
+    ep_cargar_datos(objeto_maestro_usuario.correo, objeto_maestro_datos);
+
+    guardar_datos_en_localstorage();
+}
 
 function guardar_usuario_en_localstorage(){
     console.log('entré para guardar el usuario en el localstorage');

@@ -30,18 +30,19 @@ function inicializar_variables(){
     //Rutas de los endpoints 
     ********************************************************************
     */
-    ep_login = 'login.php';
-    ep_crear_usuario = 'crear_usuario.php';
-    ep_cargar_datos = 'cargar_datos.php';
-    ep_datos_usuario = 'datos_usuario.php';
+    ep_login = 'localhost/login.php';
+    ep_crear_usuario = 'localhost/crear_usuario.php';
+    ep_cargar_datos = 'localhost/cargar_datos.php';
+    ep_datos_usuario = 'localhost/datos_usuario.php';
     
         
     i = 0;
     j = 0;
     subobjeto_de_tablero = {};
     objeto_maestro_datos = {
-        es_primera_vez: true,
+        //es_primera_vez: true,
         ultimo_id_de_tablero: 0,
+        ultimo_id_de_elemento: 0,
         tableros: [],
         elementos: [],
         estados: []
@@ -116,7 +117,7 @@ $(document).on('ready', function () {
         
         objeto_maestro_datos = JSON.parse(datos_guardados);
 
-        objeto_maestro_datos.es_primera_vez = false;
+        //objeto_maestro_datos.es_primera_vez = false;
 
         //Creo las vistas - las lleno de datos - cargo los tableros en la vista de tableros
         procesar_tableros();
@@ -127,15 +128,6 @@ $(document).on('ready', function () {
 
     }else{
         console.log('No hay nada en localstorate');
-        /*Esto lo hice en la incialización de variables
-        //Para no romper nada, defino la estuctura básica del objeto maestro
-            objeto_maestro_datos.tableros = [];
-            objeto_maestro_datos.elementos = [];
-
-        //Si no hay datos guardados, seteo que el "ultimo_id_de_tablero" es 0 y es_primera_vez es true
-            objeto_maestro_datos.es_primera_vez = true;
-            objeto_maestro_datos.ultimo_id_de_tablero = 0;
-        */
 
         //también oculto en la vista de tableros los section fijados y otros
             ocultar_tableros_fijados_y_otros();

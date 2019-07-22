@@ -65,3 +65,43 @@ function almacenar_informacion (response){
     };
 
 };
+
+function ep_crear_usuario (correo_usuario, contrasena_usuario, nombre_usuario, apellido_usuario){
+    $.post(ep_crear_usuario, {correo: correo_usuario, contrasena: contrasena_usuario, nombre: nombre_usuario, apellido: apellido_usuario}, confirmacion_creacion_usuario, "json")
+    .fail(function() {
+        $("#msj_response_login").text("No se pudo enviar la consulta al servidor. Aguarde unos instantes y reintente.");
+    });
+};
+
+function confirmacion_creacion_usuario(response){
+    if(response == true){
+        $('#formulario_crear_cuenta #crear_nombre').val('');
+        $('#formulario_crear_cuenta #crear_apellido').val('');
+        $('#formulario_crear_cuenta #crear_correo').val('');
+        $('#formulario_crear_cuenta #crear_contrasena').val('');
+        $('#formulario_crear_cuenta #repetir_contrasena').val('');
+        objeto_maestro_usuario.correo = correo_usuario;
+        objeto_maestro_usuario.contrasena = contrasena_usuario;
+        objeto_maestro_usuario.nombre = nombre_usuario;
+        objeto_maestro_usuario.apellido = apellido_usuario;
+
+        $.mobile.navigate('#inicio');
+    }else{
+        //este correo estaba usado, falló la creación
+        $("#msj_response_login").text("El correo está en uso. Pruebe con uno diferente, o intente loguear a su cuenta");
+
+        //vuelvo a setear la visibilidad de los formularios como estaba
+        $('#formulario_crear_cuenta').removeClass('ocultar');
+        $('#msj_mas_informacion').addClass('ocultar');
+        $('#formulario_mas_información').addClass('ocultar');
+        $('#acceder_cuenta').removeClass('ocultar');
+        $('#msj_login').removeClass('ocultar');
+    };
+};
+
+function ep_cargar_datos(correo_usuario, datos_a_cargar){
+    $.post(ep_cargar_datos, {correo: correo_usuario, datos: datos_a_cargar}, "json")
+    .fail(function() {
+        alert("Hubo un error en la comunicación con el servidor");
+    });
+};

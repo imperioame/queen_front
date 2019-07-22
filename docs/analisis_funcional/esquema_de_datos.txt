@@ -54,7 +54,8 @@ Van a estar absolutamente todos los elementos de todas las tablas de la app
 
 Array de objetos
 
-Ej: elementos[obj1{
+Ej: elementos[obj1{ 
+                    id_elemento: 0,
                     indice_elemento: 5
                     id_tablero: 3
                     es_lista: true
@@ -67,6 +68,7 @@ Ej: elementos[obj1{
 }, obj2, obj3]
 
 Objeto Elemento:
+    - id_elemento: num
     - indice_elemento: num
     - id_tablero (ver en tableros): num
     - es_lista: bool
