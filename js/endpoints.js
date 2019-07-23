@@ -30,6 +30,8 @@ function ep_datos_usuario(usuario){
         
         //Empaqueto datos en el objeto maestro de datos e inserto en localstorage
 
+        objeto_maestro_datos.tableros = response.tableros;
+        objeto_maestro_datos.elementos = response.elementos;
 
         guardar_datos_en_localstorage();
 
