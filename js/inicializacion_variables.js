@@ -30,11 +30,11 @@ function inicializar_variables(){
     //Rutas de los endpoints 
     ********************************************************************
     */
-    url_ep_login = 'https://id.distritografico.com.ar/queen_back/login.php';
-    url_ep_crear_usuario = 'https://id.distritografico.com.ar/queen_back/crear_usuario.php';
-    url_ep_cargar_tablero = 'https://id.distritografico.com.ar/queen_back/cargar_tablero.php';
-    url_ep_datos_usuario = 'https://id.distritografico.com.ar/queen_back/datos_usuario.php';
-    url_ep_cargar_elemento = 'https://id.distritografico.com.ar/queen_back/cargar_elemento.php';
+    url_ep_login = 'http://id.distritografico.com.ar/queen_back/login.php';
+    url_ep_crear_usuario = 'http://id.distritografico.com.ar/queen_back/crear_usuario.php';
+    url_ep_cargar_tablero = 'http://id.distritografico.com.ar/queen_back/cargar_tablero.php';
+    url_ep_datos_usuario = 'http://id.distritografico.com.ar/queen_back/datos_usuario.php';
+    url_ep_cargar_elemento = 'http://id.distritografico.com.ar/queen_back/cargar_elemento.php';
     
         
     i = 0;

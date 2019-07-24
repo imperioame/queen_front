@@ -1297,7 +1297,7 @@ $('#formulario_acceder_cuenta_existente').on('submit', function(){
 
     $('#loader_bienvenida').addClass('ocultar');
 
-
+    return false;
 });
 
 //Form de crear cuenta parte 1 - info báscia

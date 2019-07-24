@@ -39,11 +39,6 @@ function ep_datos_usuario(usuario){
         procesar_tableros();
         cargar_elementos_en_inicio();
         cargar_lista_de_borradores();
-
-
-    })
-    .fail(function() {
-        alert("no se cuenta con datos del usuario");
     });
 };
 
@@ -77,6 +72,9 @@ function ep_crear_usuario (correo_usuario, contrasena_usuario, nombre_usuario, a
 
 function ep_cargar_tablero(correo_usuario, datos_a_cargar){
     $.post(url_ep_cargar_datos, {correo: correo_usuario, datos: datos_a_cargar}, "json")
+    .done(function(){
+        
+    })
     .fail(function() {
         alert("Hubo un error en la comunicación con el servidor");
     });
