@@ -1322,13 +1322,13 @@ $('#formulario_crear_cuenta').on('submit', function(){
 });
 //Form de crear cuenta parte 2 - más info
 $('#formulario_mas_informacion').on('submit', function(){
+    $('#loader_bienvenida').removeClass('ocultar');
+
     //Almaceno el dato en localstorage
     objeto_maestro_usuario.nombre = $('#formulario_mas_informacion #crear_nombre').val();
     objeto_maestro_usuario.apellido = $('#formulario_mas_informacion #crear_apellido').val();
     
-    guardar_usuario_en_localstorage();
-    
-    //Mando todo a la db para finalizar la creación de usuario
+    //Mando todo a la db para finalizar la creación de usuario // esta función también guarda en localstorage
     ep_crear_usuario(objeto_maestro_usuario.correo, objeto_maestro_usuario.contrasena, objeto_maestro_usuario.nombre, objeto_maestro_usuario.apellido);
 
 
@@ -1339,11 +1339,6 @@ $('#formulario_mas_informacion').on('submit', function(){
     $('#acceder_cuenta').removeClass('ocultar');
     $('#msj_login').removeClass('ocultar');
 
-    //oculto formularios y muestro msj de bienvenida
-    $('#logueo').addClass('ocultar');
-    $('#msj_bienvenida').removeClass('ocultar');
-
-    $('#msj_bienvenida h1').append(objeto_maestro_usuario.nombre);
 
     return false;
 });

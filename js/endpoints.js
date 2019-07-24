@@ -50,23 +50,23 @@ function ep_crear_usuario (correo_usuario, contrasena_usuario, nombre_usuario, a
         $('#formulario_crear_cuenta #crear_correo').val('');
         $('#formulario_crear_cuenta #crear_contrasena').val('');
         $('#formulario_crear_cuenta #repetir_contrasena').val('');
-        objeto_maestro_usuario.correo = correo_usuario;
-        objeto_maestro_usuario.contrasena = contrasena_usuario;
-        objeto_maestro_usuario.nombre = nombre_usuario;
-        objeto_maestro_usuario.apellido = apellido_usuario;
 
-        $.mobile.navigate('#inicio');
+        guardar_usuario_en_localstorage();
+
+        //oculto formularios y muestro msj de bienvenida
+        $('#logueo').addClass('ocultar');
+        $('#msj_bienvenida').removeClass('ocultar');
+        $('#msj_bienvenida h1').append(objeto_maestro_usuario.nombre);
+
+        $('#loader_bienvenida').addClass('ocultar');
     })
     .fail(function() {
+
         //este correo estaba usado, falló la creación
         $("#msj_response_login").text("El correo está en uso. Pruebe con uno diferente, o intente loguear a su cuenta");
 
-        //vuelvo a setear la visibilidad de los formularios como estaba
-        $('#formulario_crear_cuenta').removeClass('ocultar');
-        $('#msj_mas_informacion').addClass('ocultar');
-        $('#formulario_mas_información').addClass('ocultar');
-        $('#acceder_cuenta').removeClass('ocultar');
-        $('#msj_login').removeClass('ocultar');
+        $('#loader_bienvenida').addClass('ocultar');
+
     });
 };
 
