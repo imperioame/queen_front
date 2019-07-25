@@ -1359,8 +1359,6 @@ $('#tableros .menu_agregar_tablero form').on('submit',function(){
     
     //Recepciono el valor del formulario
     var titulo_tablero = $('#titulo_tablero').val();
-    $('#titulo_tablero').val('');
-
 
     //Almaceno el dato en localstorage y recepciono el objeto almacenado
     var subobjeto_del_tablero = guardar_nuevo_tablero_en_objeto_maestro(titulo_tablero);
@@ -1438,29 +1436,28 @@ $('body').on('submit', '.tablero_particular .menu_agregar_elemento form',functio
 
     console.log(objeto_elementos_a_almacenar);
 
-    //mando a bd
+    //mando a bd - me devuelve el id.
     var response = ep_cargar_elemento(objeto_elementos_a_almacenar);
     if (response == '-1'){
         alert('hubo un error en la carga');
-        return false
     }else{
         objeto_elementos_a_almacenar.id_elemento = response;
-    }
 
-    //Almaceno el dato en localstorage
-    guardar_nuevo_elemento_en_objeto_maestro(objeto_elementos_a_almacenar);
-    console.log('guardé el elemento');
-    
-    //Llamo a las funciones creadoras
-    crear_contenido_en_vista_de_tablero(objeto_elementos_a_almacenar);
-    console.log('cargué los datos');
-    procesar_tableros_en_vista_de_tableros();
-    cargar_elementos_en_inicio();
+        //Almaceno el dato en localstorage
+        guardar_datos_en_localstorage();
+        console.log('guardé el elemento');
+        
+        //Llamo a las funciones creadoras
+        crear_contenido_en_vista_de_tablero(objeto_elementos_a_almacenar);
+        console.log('cargué los datos');
+        procesar_tableros_en_vista_de_tableros();
+        cargar_elementos_en_inicio();
 
 
-    //Escondo el spinner y vuelvo a mostrar el '+'
-    $('.menu_agregar_elemento').slideToggle();
-    $('.tablero_particular .agregar').removeClass('ocultar');
+        //Escondo el spinner y vuelvo a mostrar el '+'
+        $('.menu_agregar_elemento').slideToggle();
+        $('.tablero_particular .agregar').removeClass('ocultar');
+    };
 
     return false;
 	
@@ -1498,31 +1495,35 @@ function guardar_nuevo_tablero_en_objeto_maestro(titulo_tablero){
 
 
     //Defino su id:
-    var id_de_nuevo_tablero = objeto_maestro_datos.ultimo_id_de_tablero + 1;
+    //var id_de_nuevo_tablero = objeto_maestro_datos.ultimo_id_de_tablero + 1;
+    //Esto servía cuando el id del tablero lo manejaba el front - ahora lo maneja el back
+
 
     var subobjeto_del_tablero = {
-        id_tablero: id_de_nuevo_tablero,
+        id_tablero: 0,
         titulo: titulo_tablero,
         es_destacado: false,
         es_oculto: false,
         fecha_creacion: hoy_en_formato_de_fecha_almacenable()
     };
 
-
-    ep_cargar_tablero(objeto_maestro_usuario.correo, subobjeto_del_tablero);
+    subobjeto_del_tablero.id_tablero = ep_cargar_tablero(objeto_maestro_usuario.correo, subobjeto_del_tablero);
 
 
     objeto_maestro_datos.tableros[objeto_maestro_datos.tableros.length] = subobjeto_del_tablero;
-    objeto_maestro_datos.ultimo_id_de_tablero = id_de_nuevo_tablero;
+    //objeto_maestro_datos.ultimo_id_de_tablero = id_de_nuevo_tablero;
 
 
-    //Guardo en bd y local
-    almacenar_cambios();
+    //Guardo en local
+    guardar_datos_en_localstorage();
 
 
     //Devuelvo por return el subobjeto creado, para utilizarse en lo que sea
     return subobjeto_del_tablero;
 };
+
+/*
+Esto no hace falta si el id me lo entrega la bd.
 
 function guardar_nuevo_elemento_en_objeto_maestro(objeto_elemento_a_almacenar){
     console.log('entré para guardar un nuevo objeto');
@@ -1535,8 +1536,10 @@ function guardar_nuevo_elemento_en_objeto_maestro(objeto_elemento_a_almacenar){
     objeto_maestro_datos.elementos[objeto_maestro_datos.elementos.length] = objeto_elemento_a_almacenar;
 
     //Guardo datos en bd y local
-    almacenar_cambios();
+    guardar_datos_en_localstorage();
 };
+*/
+
 
 function guardar_datos_en_localstorage(){
     console.log('entré para guardar datos en el localstorage');
@@ -1548,6 +1551,9 @@ function guardar_datos_en_localstorage(){
     localStorage.setItem('datos_app', datos_a_guardar);
 };
 
+/*
+Se separó esta función, no hay forma de cargar todos los datos juntos a bd,
+primero se carga el tablero, luego el elemento.
 function almacenar_cambios(){
     //Esta función almacena en db.
     //1) Conecta con endpoint cargar_datos
@@ -1557,6 +1563,7 @@ function almacenar_cambios(){
 
     guardar_datos_en_localstorage();
 }
+*/
 
 function guardar_usuario_en_localstorage(){
     console.log('entré para guardar el usuario en el localstorage');

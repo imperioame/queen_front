@@ -17,10 +17,12 @@ var mm;
 var yyyy;
 var formato_de_fecha_almacenable;
 var contrasenas_matchean;
-var ep_login;
-var ep_cargar_datos;
-var ep_datos_usuario;
-var ep_crear_usuario;
+//var ep_cargar_datos;
+var url_ep_login;
+var url_ep_crear_usuario;
+var url_ep_cargar_tablero;
+var url_ep_cargar_elemento;
+var url_ep_datos_usuario;
 
 
 function inicializar_variables(){
@@ -42,8 +44,8 @@ function inicializar_variables(){
     subobjeto_de_tablero = {};
     objeto_maestro_datos = {
         //es_primera_vez: true,
-        ultimo_id_de_tablero: 0,
-        ultimo_id_de_elemento: 0,
+        //ultimo_id_de_tablero: 0,
+        //ultimo_id_de_elemento: 0,
         tableros: [],
         elementos: [],
         estados: []

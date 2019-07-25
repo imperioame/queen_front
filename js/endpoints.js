@@ -90,12 +90,14 @@ function ep_crear_usuario (correo_usuario, contrasena_usuario, nombre_usuario, a
 };
 
 function ep_cargar_tablero(correo_usuario, datos_a_cargar){
-    $.post(url_ep_cargar_datos, {correo: correo_usuario, datos: datos_a_cargar}, "json")
-    .done(function(){
-
+    $.post(url_ep_cargar_tablero, {correo: correo_usuario, tablero: datos_a_cargar}, "json")
+    .done(function(response){
+        $('#titulo_tablero').val('');
+        response = JSON.parse(response);
+        return response.id_tablero;
     })
     .fail(function() {
-        alert("Hubo un error en la comunicación con el servidor");
+        return '-1';
     });
 };
 
