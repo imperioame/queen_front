@@ -257,6 +257,11 @@ main .agregar:hover{
 
 /*------------------------ Estilos de la vista de bienvenida ------------------------*/
 
+#msj_response_login{
+    color: red;
+}
+
+
 #logueo h1, #msj_bienvenida h1{
     text-align: center;
 }

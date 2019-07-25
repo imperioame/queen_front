@@ -8,18 +8,34 @@ function ep_login(correo_usuario, contrasena){
         objeto_maestro_usuario.correo = correo_usuario;
         objeto_maestro_usuario.contrasena = contrasena;
 
+
+        //veamos que me trajo:
+        console.log('Así lo traigo de la api:');
+        console.log(response);
+        console.log('Así lo parseo:');
+        console.log(JSON.parse(response));
+
+        
         //guardo nombre y apellido del usuario
-        objeto_maestro_usuario.nombre = response.nombre;
-        objeto_maestro_usuario.apellido = response.apellido;
+        objeto_maestro_usuario.nombre = JSON.parse(response).nombre;
+        objeto_maestro_usuario.apellido = JSON.parse(response).apellido;
+
+        //Guardo los datos de usuario en local:
+        guardar_usuario_en_localstorage();
 
         //Solicita los datos que haya de este usuario en la db - los carga y continua a la sig vista
         ep_datos_usuario(objeto_maestro_usuario.correo);
 
         //Redirijo a vista de inicio
         $.mobile.navigate('#inicio');
+
+        $('#loader_bienvenida').addClass('ocultar');
+
     })
     .fail(function() {
         $("#msj_response_login").text("Usuario o contraseña incorrectos.");
+        $('#loader_bienvenida').addClass('ocultar');
+
     });
 };
 
@@ -30,8 +46,11 @@ function ep_datos_usuario(usuario){
         
         //Empaqueto datos en el objeto maestro de datos e inserto en localstorage
 
-        objeto_maestro_datos.tableros = response.tableros;
-        objeto_maestro_datos.elementos = response.elementos;
+        console.log('recibí esto:');
+        console.log(JSON.parse(response));
+
+        objeto_maestro_datos.tableros = JSON.parse(response).tableros;
+        objeto_maestro_datos.elementos = JSON.parse(response).elementos;
 
         guardar_datos_en_localstorage();
 
@@ -83,7 +102,8 @@ function ep_cargar_tablero(correo_usuario, datos_a_cargar){
 function ep_cargar_elemento(objeto_de_elemento){
     $.post(url_ep_cargar_elemento, {elemento: objeto_de_elemento}, "json")
     .done(function(response){
-        return response;
+        response = JSON.parse(response);
+        return response.id_elemento;
     })
     .fail(function() {
         return '-1';

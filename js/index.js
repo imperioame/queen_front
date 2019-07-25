@@ -947,12 +947,14 @@ $(document).on("ready", function () {
 
 //botones en pantalla de logueo:
 $('#crear_cuenta').on('vclick', function(){
+    $('#msj_response_login').text('');
     $('#crear_cuenta').addClass('ocultar');
     $('#acceder_cuenta').removeClass('ocultar');
     $('#formulario_acceder_cuenta_existente').addClass('ocultar');
     $('#formulario_crear_cuenta').removeClass('ocultar');
 });
 $('#acceder_cuenta').on('vclick', function(){
+    $('#msj_response_login').text('');
     $('#crear_cuenta').removeClass('ocultar');
     $('#acceder_cuenta').addClass('ocultar');
     $('#formulario_acceder_cuenta_existente').removeClass('ocultar');
@@ -962,6 +964,7 @@ $('#acceder_cuenta').on('vclick', function(){
 $('#bienvenida_comenzar').on('vclick', function(){
     //vuelvo a dejar todo como estaba.... por las dudas
     $('#logueo').removeClass('ocultar');
+    $('#msj_response_login').text('');
     $('#msj_bienvenida').addClass('ocultar');
     
 });
@@ -1284,8 +1287,11 @@ Recepción de formularios de nuevo elemento / tablero
 
 //Form de login
 $('#formulario_acceder_cuenta_existente').on('submit', function(){
-    //Tengo que consultar con DB si el usuario existe y traer los datos que ese usuario tenga
 
+    $('#msj_response_login').text('');
+
+    //Tengo que consultar con DB si el usuario existe y traer los datos que ese usuario tenga
+    
     var correo = $('#login_correo').val();
     var contrasena = $('#login_contrasena').val();
 
@@ -1294,8 +1300,6 @@ $('#formulario_acceder_cuenta_existente').on('submit', function(){
     //Hacemos la consulta a la bd
     ep_login(correo, contrasena);
     //El proceso continúa con la funcion: obtener_datos_de_servidor
-
-    $('#loader_bienvenida').addClass('ocultar');
 
     return false;
 });
@@ -1322,6 +1326,8 @@ $('#formulario_crear_cuenta').on('submit', function(){
 });
 //Form de crear cuenta parte 2 - más info
 $('#formulario_mas_informacion').on('submit', function(){
+    
+    $('#msj_response_login').text('');
     $('#loader_bienvenida').removeClass('ocultar');
 
     //Almaceno el dato en localstorage
@@ -1333,11 +1339,14 @@ $('#formulario_mas_informacion').on('submit', function(){
 
 
     //vuelvo a setear la visibilidad de los formularios como estaba
-    $('#formulario_crear_cuenta').removeClass('ocultar');
     $('#msj_mas_informacion').addClass('ocultar');
     $('#formulario_mas_información').addClass('ocultar');
     $('#acceder_cuenta').removeClass('ocultar');
     $('#msj_login').removeClass('ocultar');
+    $('#logueo').removeClass('ocultar');
+    $('#formulario_acceder_cuenta_existente').removeClass('ocultar');
+    $('#formulario_crear_cuenta').addClass('ocultar');
+    $('#formulario_mas_informacion').addClass('ocultar');
 
 
     return false;
@@ -1351,6 +1360,7 @@ $('#tableros .menu_agregar_tablero form').on('submit',function(){
     //Recepciono el valor del formulario
     var titulo_tablero = $('#titulo_tablero').val();
     $('#titulo_tablero').val('');
+
 
     //Almaceno el dato en localstorage y recepciono el objeto almacenado
     var subobjeto_del_tablero = guardar_nuevo_tablero_en_objeto_maestro(titulo_tablero);
@@ -1481,10 +1491,11 @@ Funciones de Almacenaje y BORRADO
 
 function guardar_nuevo_tablero_en_objeto_maestro(titulo_tablero){
     console.log('entré para guardar un nuevo tablero');
-    //Agarro el objeto maestro. 
-    //Agarro el array de tableros del objeto maestro
-    //Me posiciono en la última posición del array
+    //Envío el objeto a la API
+    //Recibo el ID que le creó
+    //Guardo el dato en localstorage, en la última posición del aray
     //Creo el subobjeto que le corresponda
+
 
     //Defino su id:
     var id_de_nuevo_tablero = objeto_maestro_datos.ultimo_id_de_tablero + 1;
@@ -1495,7 +1506,11 @@ function guardar_nuevo_tablero_en_objeto_maestro(titulo_tablero){
         es_destacado: false,
         es_oculto: false,
         fecha_creacion: hoy_en_formato_de_fecha_almacenable()
-};
+    };
+
+
+    ep_cargar_tablero(objeto_maestro_usuario.correo, subobjeto_del_tablero);
+
 
     objeto_maestro_datos.tableros[objeto_maestro_datos.tableros.length] = subobjeto_del_tablero;
     objeto_maestro_datos.ultimo_id_de_tablero = id_de_nuevo_tablero;
@@ -1531,8 +1546,6 @@ function guardar_datos_en_localstorage(){
 
     //Pusheo los datos al locaslstorage
     localStorage.setItem('datos_app', datos_a_guardar);
-
-    //
 };
 
 function almacenar_cambios(){
