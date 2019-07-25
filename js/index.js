@@ -1361,24 +1361,9 @@ $('#tableros .menu_agregar_tablero form').on('submit',function(){
     var titulo_tablero = $('#titulo_tablero').val();
 
     //Almaceno el dato en localstorage y recepciono el objeto almacenado
-    var subobjeto_del_tablero = guardar_nuevo_tablero_en_objeto_maestro(titulo_tablero);
+    guardar_nuevo_tablero_en_objeto_maestro(titulo_tablero);
     console.log('guardé el tablero');
     
-    
-    //Llamo a las funciones creadoras
-    crear_vista_de_tablero(subobjeto_del_tablero);
-    console.log('creé la vista');
-    procesar_tableros_en_vista_de_tableros();
-
-
-    //Escondo el spinner y vuelvo a mostrar el '+'
-    $('.menu_agregar_tablero').slideToggle();
-    $('#tableros .agregar').removeClass('ocultar');
-
-    // LLevo al usuario a la nueva vista
-    var id_tablero_string = 'tablero_numero_' + subobjeto_del_tablero.id_tablero;
-    $.mobile.navigate( '#'+id_tablero_string );
-    console.log('llevé al usuario a la nueva vista');
 	return false;
 	
 });
@@ -1507,19 +1492,12 @@ function guardar_nuevo_tablero_en_objeto_maestro(titulo_tablero){
         fecha_creacion: hoy_en_formato_de_fecha_almacenable()
     };
 
-    subobjeto_del_tablero.id_tablero = ep_cargar_tablero(objeto_maestro_usuario.correo, subobjeto_del_tablero);
-
-
-    objeto_maestro_datos.tableros[objeto_maestro_datos.tableros.length] = subobjeto_del_tablero;
-    //objeto_maestro_datos.ultimo_id_de_tablero = id_de_nuevo_tablero;
-
-
-    //Guardo en local
-    guardar_datos_en_localstorage();
-
+    //esta función guarda en db y en local, también asigna el id del tablero
+    ep_cargar_tablero(objeto_maestro_usuario.correo, subobjeto_del_tablero);
 
     //Devuelvo por return el subobjeto creado, para utilizarse en lo que sea
-    return subobjeto_del_tablero;
+    //return subobjeto_del_tablero;
+    //no devuelvo nada lo maneja todo el endpoint
 };
 
 /*

@@ -138,21 +138,20 @@ $(document).on('ready', function () {
             console.log('este es el nuevo esquema de datos: ');
             console.log(objeto_maestro_datos);
 
-            //Puede ser que aún no haya creado absolutamente nada, pero tenga usuario y esté logueado.
-            //Consulto si está logueado:
-            if (dato_de_usuario_guardado != "undefined" && dato_de_usuario_guardado != null && dato_de_usuario_guardado != ""){
-                
-                objeto_maestro_usuario = JSON.parse(dato_de_usuario_guardado);
-                
-                //Lo llevo a la vista de inicio
-                $.mobile.navigate('#inicio');
+    };
+    //Puede ser que aún no haya creado absolutamente nada, pero tenga usuario y esté logueado.
+    //Consulto si está logueado:
+    if (dato_de_usuario_guardado != "undefined" && dato_de_usuario_guardado != null && dato_de_usuario_guardado != ""){
+        
+        objeto_maestro_usuario = JSON.parse(dato_de_usuario_guardado);
+        
+        //Lo llevo a la vista de inicio
+        $.mobile.navigate('#inicio');
 
-                //Si está logueado, pido datos al servidor:
-                ep_datos_usuario(objeto_maestro_usuario.correo);
-            };
-            //Si no estaba logueado no pasa nada, se queda en bienvenida
-
-    }
+        //Si está logueado, pido datos al servidor:
+        ep_datos_usuario(objeto_maestro_usuario.correo);
+    };
+    //Si no estaba logueado no pasa nada, se queda en bienvenida
 
     //Adicionalmente, cargo los elementos que correspondan a INICIO - esto implica la fecha de hoy, hay que cargarla haya o no datos en localstorage
     cargar_elementos_en_inicio();

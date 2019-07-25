@@ -52,6 +52,7 @@ function ep_datos_usuario(usuario){
         objeto_maestro_datos.tableros = JSON.parse(response).tableros;
         objeto_maestro_datos.elementos = JSON.parse(response).elementos;
 
+
         guardar_datos_en_localstorage();
 
         //Actualizo vistas
@@ -94,10 +95,40 @@ function ep_cargar_tablero(correo_usuario, datos_a_cargar){
     .done(function(response){
         $('#titulo_tablero').val('');
         response = JSON.parse(response);
-        return response.id_tablero;
+        console.log('recibí el id del tablero: ');
+        console.log(response);
+
+
+        datos_a_cargar.id_tablero = response.id_tablero;
+
+
+        objeto_maestro_datos.tableros[objeto_maestro_datos.tableros.length] = datos_a_cargar;
+        //objeto_maestro_datos.ultimo_id_de_tablero = id_de_nuevo_tablero;
+    
+    
+        //Guardo en local
+        guardar_datos_en_localstorage();
+
+        //Llamo a las funciones creadoras
+        crear_vista_de_tablero(datos_a_cargar);
+        console.log('creé la vista');
+        procesar_tableros_en_vista_de_tableros();
+
+        //Escondo el spinner y vuelvo a mostrar el '+'
+        $('.menu_agregar_tablero').slideToggle();
+        $('#tableros .agregar').removeClass('ocultar');
+
+        // LLevo al usuario a la nueva vista
+        var id_tablero_string = 'tablero_numero_' + datos_a_cargar.id_tablero;
+        $.mobile.navigate( '#'+id_tablero_string );
+        console.log('llevé al usuario a la nueva vista');
+
+        //return response.id_tablero;
     })
     .fail(function() {
-        return '-1';
+        console.log('falló la carga del tablero');
+        $.mobile.navigate('#inicio');
+        //return -1;
     });
 };
 
