@@ -1102,27 +1102,26 @@ $('body').on('vclick','.fijar',function(){
 
     //Busco el tablero en el objeto maestro de datos y le cambio su valor de "es_destacado"
     for(i in objeto_maestro_datos.tableros){
+        //Busco el tablero que corresponda:
         if(objeto_maestro_datos.tableros[i].id_tablero === id_tablero_a_buscar){
+            
             //Averiguo si YA estaba destacado. Si es así, entonce lo saco del destacado
             if(objeto_maestro_datos.tableros[i].es_destacado){
                 objeto_maestro_datos.tableros[i].es_destacado = false;
             }else{
                 objeto_maestro_datos.tableros[i].es_destacado = true;
             }
-        }
+
+            //Guardo en bd y local
+            ep_cargar_tablero(objeto_maestro_usuario.correo, objeto_maestro_datos.tableros[i]);
+        };
     };
-
-    //Guardo los datos en bd y local
-    almacenar_cambios();
-
-    //Recargo página de tableros
-    procesar_tableros_en_vista_de_tableros();
 
 });
 
 //Al presionar botón de "Eliminar" de un tablero - funciona también para recuperar el tablero
 $('body').on('vclick','.descartar',function(){
-    console.log('hiciste click para borrar/recuperar un talbero');
+    console.log('hiciste click para ocultar/recuperar un talbero');
         
     //Detecto el Id de tablero al que pertenece
     var id_tablero_calculado = $(this).parent().parent().parent().parent().parent().attr('id').toString();
@@ -1155,16 +1154,15 @@ $('body').on('vclick','.descartar',function(){
                 $.mobile.navigate('#tableros');
             
             };
+
+            //Guardo en db y local
+            ep_cargar_tablero(objeto_maestro_usuario.correo, objeto_maestro_datos.tableros[i]);
+
         };
     };
-    //Guardo los datos en bd y local
-    almacenar_cambios();
-
+    
     //Lo cargo en la lista de papelera dentro de Ajustes:
     cargar_lista_de_borradores();
-
-    //Recargo página de tableros
-    procesar_tableros_en_vista_de_tableros();
     
     //Reproceso la vista de inicio
     cargar_elementos_en_inicio();
@@ -1485,7 +1483,7 @@ function guardar_nuevo_tablero_en_objeto_maestro(titulo_tablero){
 
 
     var subobjeto_del_tablero = {
-        id_tablero: 0,
+        id_tablero: -1,
         titulo: titulo_tablero,
         es_destacado: false,
         es_oculto: false,
@@ -1497,7 +1495,7 @@ function guardar_nuevo_tablero_en_objeto_maestro(titulo_tablero){
 
     //Devuelvo por return el subobjeto creado, para utilizarse en lo que sea
     //return subobjeto_del_tablero;
-    //no devuelvo nada lo maneja todo el endpoint
+    //Depreciado: no devuelvo nada lo maneja todo el endpoint
 };
 
 /*

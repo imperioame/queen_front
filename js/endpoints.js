@@ -32,7 +32,10 @@ function ep_login(correo_usuario, contrasena){
         $('#loader_bienvenida').addClass('ocultar');
 
     })
-    .fail(function() {
+    .fail(function(response) {
+        console.log('falló en logueo. Mensaje del servidor:');
+        console.log(response.mensaje);
+
         $("#msj_response_login").text("Usuario o contraseña incorrectos.");
         $('#loader_bienvenida').addClass('ocultar');
 
@@ -59,6 +62,9 @@ function ep_datos_usuario(usuario){
         procesar_tableros();
         cargar_elementos_en_inicio();
         cargar_lista_de_borradores();
+    }).fail(function(response){
+        console.log('falló obtener datos de usuario. Mensaje del servidor:');
+        console.log(response.mensaje);
     });
 };
 
@@ -80,7 +86,9 @@ function ep_crear_usuario (correo_usuario, contrasena_usuario, nombre_usuario, a
 
         $('#loader_bienvenida').addClass('ocultar');
     })
-    .fail(function() {
+    .fail(function(response) {
+        console.log('falló en crear usuario. Mensaje del servidor:');
+        console.log(response.mensaje);
 
         //este correo estaba usado, falló la creación
         $("#msj_response_login").text("El correo está en uso. Pruebe con uno diferente, o intente loguear a su cuenta");
@@ -93,40 +101,55 @@ function ep_crear_usuario (correo_usuario, contrasena_usuario, nombre_usuario, a
 function ep_cargar_tablero(correo_usuario, datos_a_cargar){
     $.post(url_ep_cargar_tablero, {correo: correo_usuario, tablero: datos_a_cargar}, "json")
     .done(function(response){
-        $('#titulo_tablero').val('');
-        response = JSON.parse(response);
-        console.log('recibí el id del tablero: ');
-        console.log(response);
-
-
-        datos_a_cargar.id_tablero = response.id_tablero;
-
-
-        objeto_maestro_datos.tableros[objeto_maestro_datos.tableros.length] = datos_a_cargar;
-        //objeto_maestro_datos.ultimo_id_de_tablero = id_de_nuevo_tablero;
+        
+        //pregunto si se suponía que tenía que actualizar o cargar un nuevo tablero
+        if(datos_a_cargar.id_tablero == -1){
+            //tenía uqe cargar uno nuevo, entonces:
+            $('#titulo_tablero').val('');
+            response = JSON.parse(response);
+            console.log('recibí el id del tablero: ');
+            console.log(response);
     
     
-        //Guardo en local
-        guardar_datos_en_localstorage();
+            datos_a_cargar.id_tablero = response.id_tablero;
+    
+    
+            objeto_maestro_datos.tableros[objeto_maestro_datos.tableros.length] = datos_a_cargar;
+            //objeto_maestro_datos.ultimo_id_de_tablero = id_de_nuevo_tablero;
+        
+        
+            //Guardo en local
+            guardar_datos_en_localstorage();
+    
+            //Llamo a las funciones creadoras
+            crear_vista_de_tablero(datos_a_cargar);
+            console.log('creé la vista');
+            procesar_tableros_en_vista_de_tableros();
+    
+            //Escondo el spinner y vuelvo a mostrar el '+'
+            $('.menu_agregar_tablero').slideToggle();
+            $('#tableros .agregar').removeClass('ocultar');
+    
+            // LLevo al usuario a la nueva vista
+            var id_tablero_string = 'tablero_numero_' + datos_a_cargar.id_tablero;
+            $.mobile.navigate( '#'+id_tablero_string );
+            console.log('llevé al usuario a la nueva vista');
+    
+            //return response.id_tablero;
+        }else{
+            //El tablero existía, solo tenía que actualizarlo
+            
+            //Guardo en local
+            guardar_datos_en_localstorage();
+            
+            //Recargo página de tableros
+            procesar_tableros_en_vista_de_tableros();
 
-        //Llamo a las funciones creadoras
-        crear_vista_de_tablero(datos_a_cargar);
-        console.log('creé la vista');
-        procesar_tableros_en_vista_de_tableros();
-
-        //Escondo el spinner y vuelvo a mostrar el '+'
-        $('.menu_agregar_tablero').slideToggle();
-        $('#tableros .agregar').removeClass('ocultar');
-
-        // LLevo al usuario a la nueva vista
-        var id_tablero_string = 'tablero_numero_' + datos_a_cargar.id_tablero;
-        $.mobile.navigate( '#'+id_tablero_string );
-        console.log('llevé al usuario a la nueva vista');
-
-        //return response.id_tablero;
+        };
     })
-    .fail(function() {
-        console.log('falló la carga del tablero');
+    .fail(function(response) {
+        console.log('falló la carga del tablero. Mensaje del servidor:');
+        console.log(response.mensaje);
         $.mobile.navigate('#inicio');
         //return -1;
     });
@@ -138,7 +161,21 @@ function ep_cargar_elemento(objeto_de_elemento){
         response = JSON.parse(response);
         return response.id_elemento;
     })
-    .fail(function() {
+    .fail(function(response) {
+        console.log('falló en cargar un elemento. Mensaje del servidor:');
+        console.log(response.mensaje);
         return '-1';
     });
 };
+
+function ep_eliminar_tablero(correo_usuario, id_tablero){
+    $.post(url_ep_eliminar_tablero, {correo: correo_usuario, id_tablero: id_tablero}, "json")
+    .done(function(response){
+        
+    })
+    .fail(function(response) {
+        console.log('falló en eliminar el tablero. Mensaje del servidor:');
+        console.log(response.mensaje);
+        //return -1;
+    });
+}
