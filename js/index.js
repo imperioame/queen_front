@@ -1389,28 +1389,11 @@ $('body').on('submit', '.tablero_particular .menu_agregar_elemento form',functio
     console.log(objeto_elementos_a_almacenar);
 
     //mando a bd - me devuelve el id.
-    var response = ep_cargar_elemento(objeto_elementos_a_almacenar);
-    if (response == '-1'){
-        alert('hubo un error en la carga');
-    }else{
-        objeto_elementos_a_almacenar.id_elemento = response;
-
-        //Almaceno el dato en localstorage
-        guardar_datos_en_localstorage();
-        console.log('guardé el elemento');
-        
-        //Llamo a las funciones creadoras
-        crear_contenido_en_vista_de_tablero(objeto_elementos_a_almacenar);
-        console.log('cargué los datos');
-        procesar_tableros_en_vista_de_tableros();
-        cargar_elementos_en_inicio();
-
-
-        //Escondo el spinner y vuelvo a mostrar el '+'
-        $('.menu_agregar_elemento').slideToggle();
-        $('.tablero_particular .agregar').removeClass('ocultar');
-    };
-
+    ep_cargar_elemento(objeto_elementos_a_almacenar);
+    
+    //Escondo el spinner y vuelvo a mostrar el '+'
+    $('.menu_agregar_elemento').slideToggle();
+    $('.tablero_particular .agregar').removeClass('ocultar');
     return false;
 	
 });

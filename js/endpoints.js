@@ -159,12 +159,38 @@ function ep_cargar_elemento(correo_usuario, objeto_de_elemento){
     $.post(url_ep_cargar_elemento, {correo: correo_usuario, elemento: objeto_de_elemento}, "json")
     .done(function(response){
         response = JSON.parse(response);
-        return response.id_elemento;
+        
+        //pregunto si se suponía que tenía que actualizar o cargar un nuevo elemento
+        if(objeto_de_elemento.id_elemento == -1){
+            //tenía uqe cargar uno nuevo, entonces:
+            $('#titulo_tablero').val('');
+            response = JSON.parse(response);
+            console.log('recibí el id del tablero: ');
+            console.log(response);
+    
+            objeto_de_elemento.id_elemento = response.id_tablero;
+    
+            //Llamo a las funciones creadoras
+            crear_contenido_en_vista_de_tablero(objeto_de_elemento);
+        
+            procesar_tableros_en_vista_de_tableros();
+            
+        }else{
+            //El tablero existía, solo tenía que actualizarlo
+            //En principio no hag nada
+        };
+        
+        //Guardo en local
+        guardar_datos_en_localstorage();
+
+        cargar_elementos_en_inicio();
+        procesar_tableros_en_vista_de_tableros();
+
+
     })
     .fail(function(response) {
         console.log('falló en cargar un elemento. Mensaje del servidor:');
         console.log(response.mensaje);
-        return '-1';
     });
 };
 
