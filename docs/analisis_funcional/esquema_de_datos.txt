@@ -1,7 +1,5 @@
 Objeto maestro para guardar en el localstorage:
 objeto_maestro_datos = {
-    es_primera_vez: booleano,
-    ultimo_id_de_tablero: #######,
     tableros: [] array de objetos (ver tableros),
     elementos: [] array de objetos (Ver elementos),
     estados: [] array de objetos (ver estados)
@@ -28,8 +26,8 @@ Array de objetos.
 ej: tableros[obj1{
                     id_tablero: 1;
                     titulo: "alfredo";
-                    es_destacado: true;
-                    es_oculto: false;
+                    es_destacado: 1;
+                    es_oculto: 0;
                     fecha_creacion: 20/5/2019
 
 }, obj2, obj3]
@@ -37,8 +35,8 @@ ej: tableros[obj1{
 Objeto Tablero:
     - id_tablero: num
     - titulo: str
-    - es_destacado: bool
-    - es_oculto: bool
+    - es_destacado: bool (0 o 1)
+    - es_oculto: bool (0 o 1)
     - fecha_creacion: date
 
 
@@ -58,7 +56,7 @@ Ej: elementos[obj1{
                     id_elemento: 0,
                     indice_elemento: 5
                     id_tablero: 3
-                    es_lista: true
+                    es_lista: 1
                     contenido: "Comprar pantalón nuevo"
                     status: ""
                     fecha_deadline: 15/6/19
@@ -71,7 +69,7 @@ Objeto Elemento:
     - id_elemento: num
     - indice_elemento: num
     - id_tablero (ver en tableros): num
-    - es_lista: bool
+    - es_lista: bool (0 o 1)
     - contenido: str
     - status: str
     - fecha_deadline: date

@@ -62,6 +62,14 @@ function ep_datos_usuario(usuario){
         procesar_tableros();
         cargar_elementos_en_inicio();
         cargar_lista_de_borradores();
+
+
+        //Adicionalmente, cargo los elementos que correspondan a INICIO - esto implica la fecha de hoy, hay que cargarla haya o no datos en localstorage
+        cargar_elementos_en_inicio();
+
+        //también creo la lista de papelera en página de ajustes (para actualizar el texto al que corersponda)
+        cargar_lista_de_borradores();
+
     }).fail(function(response){
         console.log('falló obtener datos de usuario. Mensaje del servidor:');
         console.log(response.mensaje);
@@ -174,7 +182,7 @@ function ep_cargar_elemento(correo_usuario, objeto_de_elemento){
             crear_contenido_en_vista_de_tablero(objeto_de_elemento);
         
             procesar_tableros_en_vista_de_tableros();
-            
+
         }else{
             //El tablero existía, solo tenía que actualizarlo
             //En principio no hag nada

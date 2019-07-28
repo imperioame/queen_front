@@ -37,7 +37,7 @@ function crear_contenido_en_vista_de_tablero(objeto_de_elementos){
     console.log(objeto_de_elementos);
         
     //me fijo si es elemento de una lista, o solo texto
-    if (objeto_de_elementos.es_lista){
+    if (objeto_de_elementos.es_lista == 1){
         //es elemento de una lista, en principio me fijo si hay una ul
 /*
 
@@ -192,7 +192,7 @@ console.log("Estoy creando las vistas de los de tableros");
 
 function crear_vista_de_tablero(objeto_tablero, forzar_creacion){
     //solo creo tableros para los que no estén ocultos
-    if(!objeto_tablero.es_oculto || forzar_creacion == true){
+    if(objeto_tablero.es_oculto == 0 || forzar_creacion == true){
 
         // Preparo el string del id que le corresponda al tablero
         var id_tablero_string = 'tablero_numero_' + objeto_tablero.id_tablero;
@@ -262,7 +262,7 @@ function crear_vista_de_tablero(objeto_tablero, forzar_creacion){
 
             
         //detecto si el tablero esta en papelera, si no lo está, entonces oculto el mensaje de tablero borrado
-        if (!objeto_tablero.es_oculto){
+        if (objeto_tablero.es_oculto == 1){
             $('#'+id_tablero_string +' main .aviso_de_tablero_en_papelera').addClass('ocultar');
         };
         
@@ -459,9 +459,9 @@ function cargar_elementos_en_inicio(){
         for(j in array_de_tableros){
             if(array_de_tableros[j].id_tablero === array_de_elementos[i].id_tablero){
 
-                el_tablero_esta_oculto = array_de_tableros[j].es_oculto;
+                el_tablero_esta_oculto = array_de_tableros[j].es_oculto == 1;
                 console.log('encontré un elemento del tablero' + array_de_tableros[j].id_tablero);
-                console.log('Tablero oculto?: ' + array_de_tableros[j].es_oculto);
+                console.log('Tablero oculto?: ' + el_tablero_esta_oculto);
             };
         };
 
@@ -562,7 +562,7 @@ function procesar_tableros_en_vista_de_tableros(){
             console.log('tablero numero '+i);
 
             //Si está oculto lo ignoro
-            if(!objeto_maestro_datos.tableros[i].es_oculto){
+            if(objeto_maestro_datos.tableros[i].es_oculto == 0){
                 
                 //SI hay al menos un tablero no oculto, puedo mostrar.
                 existe_algun_tablero_visible = true;
@@ -589,7 +589,7 @@ function procesar_tableros_en_vista_de_tableros(){
                 
                 //Desde acá es para ver donde inyectarlo
                 //Me fijo si es fijado o no
-                if(objeto_maestro_datos.tableros[i].es_destacado){
+                if(objeto_maestro_datos.tableros[i].es_destacado == 1){
 
                     numero_de_tablero_fijado++;
                     //calculo si va en el ui-block-a o ui-block-b
@@ -624,7 +624,7 @@ function procesar_tableros_en_vista_de_tableros(){
                         console.log('encontré un elmeneto de este tablero');
 
                         //Me fijo si es item de lista, si lo es lo inyecto ahí
-                        if(objeto_maestro_datos.elementos[j].es_lista){
+                        if(objeto_maestro_datos.elementos[j].es_lista == 1){
                             console.log('el elemento es de una lista');
                             //es elemento de una lista, en principio aseguro que haya ul
                             if( !$('#tableros main .tablero a[href="#'+ id_tablero_string +'"] div ul').length){
@@ -687,6 +687,7 @@ function procesar_tableros_en_vista_de_tableros(){
                 $('#tableros main #otros_tableros').removeClass('ocultar');
             };
         }else{
+            console.log('No hay tableros visibles');
             //si no hay tableros visibles, oculto ambos
             $('#tableros main #tableros_fijados').addClass('ocultar');
             $('#tableros main #otros_tableros').addClass('ocultar');
@@ -707,7 +708,7 @@ function cargar_lista_de_borradores(){
     var cant_de_ocultos = 0;
 
     for (i in objeto_maestro_datos.tableros){
-        if (objeto_maestro_datos.tableros[i].es_oculto){
+        if (objeto_maestro_datos.tableros[i].es_oculto == 1){
             
             if(no_hay_ocultos){
                 var listview_en_collapsible = '<ul></ul>';
@@ -1106,10 +1107,10 @@ $('body').on('vclick','.fijar',function(){
         if(objeto_maestro_datos.tableros[i].id_tablero === id_tablero_a_buscar){
             
             //Averiguo si YA estaba destacado. Si es así, entonce lo saco del destacado
-            if(objeto_maestro_datos.tableros[i].es_destacado){
-                objeto_maestro_datos.tableros[i].es_destacado = false;
+            if(objeto_maestro_datos.tableros[i].es_destacado ==1){
+                objeto_maestro_datos.tableros[i].es_destacado = 0;
             }else{
-                objeto_maestro_datos.tableros[i].es_destacado = true;
+                objeto_maestro_datos.tableros[i].es_destacado = 1;
             }
 
             //Guardo en bd y local
@@ -1135,17 +1136,17 @@ $('body').on('vclick','.descartar',function(){
     for(i in objeto_maestro_datos.tableros){
         if(objeto_maestro_datos.tableros[i].id_tablero === id_tablero_a_buscar){
             console.log('encontre tablero. Averiguo si lo tengo que ocultar o mostrar');
-            if(objeto_maestro_datos.tableros[i].es_oculto){
+            if(objeto_maestro_datos.tableros[i].es_oculto == 1){
                 //Lo tengo que mostrar
                 console.log('el tablero estaba oculto, lo tengo que mostrar');
-                objeto_maestro_datos.tableros[i].es_oculto = false;
+                objeto_maestro_datos.tableros[i].es_oculto = 0;
                 //oculto el mensaje de tablero en papelera
                 $('#'+ id_tablero_calculado +' main .aviso_de_tablero_en_papelera').addClass('ocultar');
 
             }else{
                 console.log('el tablero estaba visible, lo tengo que ocultar');
                 //lo oculto
-                objeto_maestro_datos.tableros[i].es_oculto = true;
+                objeto_maestro_datos.tableros[i].es_oculto = 1;
 
                 //Muestro el aviso de tablero en papelera
                 $('#'+id_tablero_calculado +' main .aviso_de_tablero_en_papelera').removeClass('ocultar');
@@ -1373,6 +1374,14 @@ $('body').on('submit', '.tablero_particular .menu_agregar_elemento form',functio
     console.log('la fecha formateada a string: ')
     console.log(deadline);
     
+    //Convierto de booleano a 0 o 1
+    if(es_lista){
+        es_lista = 1;
+    }else{
+        es_lista = 0;
+    };
+    
+
 
 
     var objeto_elementos_a_almacenar = {
@@ -1390,7 +1399,7 @@ $('body').on('submit', '.tablero_particular .menu_agregar_elemento form',functio
 
     //mando a bd - me devuelve el id.
     ep_cargar_elemento(objeto_elementos_a_almacenar);
-    
+
     //Escondo el spinner y vuelvo a mostrar el '+'
     $('.menu_agregar_elemento').slideToggle();
     $('.tablero_particular .agregar').removeClass('ocultar');
@@ -1437,8 +1446,8 @@ function guardar_nuevo_tablero_en_objeto_maestro(titulo_tablero){
     var subobjeto_del_tablero = {
         id_tablero: -1,
         titulo: titulo_tablero,
-        es_destacado: false,
-        es_oculto: false,
+        es_destacado: 0,
+        es_oculto: 0,
         fecha_creacion: hoy_en_formato_de_fecha_almacenable()
     };
 

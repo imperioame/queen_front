@@ -156,10 +156,4 @@ $(document).on('ready', function () {
     };
     //Si no estaba logueado no pasa nada, se queda en bienvenida
 
-    //Adicionalmente, cargo los elementos que correspondan a INICIO - esto implica la fecha de hoy, hay que cargarla haya o no datos en localstorage
-    cargar_elementos_en_inicio();
-    //también creo la lista de papelera en página de ajustes (para actualizar el texto al que corersponda)
-    cargar_lista_de_borradores();
-
-
 });
