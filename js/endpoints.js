@@ -155,8 +155,8 @@ function ep_cargar_tablero(correo_usuario, datos_a_cargar){
     });
 };
 
-function ep_cargar_elemento(objeto_de_elemento){
-    $.post(url_ep_cargar_elemento, {elemento: objeto_de_elemento}, "json")
+function ep_cargar_elemento(correo_usuario, objeto_de_elemento){
+    $.post(url_ep_cargar_elemento, {correo: correo_usuario, elemento: objeto_de_elemento}, "json")
     .done(function(response){
         response = JSON.parse(response);
         return response.id_elemento;

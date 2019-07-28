@@ -1376,7 +1376,7 @@ $('body').on('submit', '.tablero_particular .menu_agregar_elemento form',functio
 
 
     var objeto_elementos_a_almacenar = {
-        id_elemento: '',
+        id_elemento: -1,
         indice_elemento: indice_elemento,
         id_tablero: id_tablero_para_guardar,
         es_lista: es_lista,
