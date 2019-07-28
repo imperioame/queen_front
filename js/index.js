@@ -1416,7 +1416,7 @@ $('body').on('submit', '.tablero_particular .menu_agregar_elemento form',functio
     console.log(objeto_elementos_a_almacenar);
 
     //mando a bd - me devuelve el id.
-    ep_cargar_elemento(objeto_elementos_a_almacenar);
+    ep_cargar_elemento(objeto_maestro_usuario.correo, objeto_elementos_a_almacenar);
 
     //Escondo el spinner y vuelvo a mostrar el '+'
     $('.menu_agregar_elemento').slideToggle();
