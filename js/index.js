@@ -262,7 +262,7 @@ function crear_vista_de_tablero(objeto_tablero, forzar_creacion){
 
             
         //detecto si el tablero esta en papelera, si no lo está, entonces oculto el mensaje de tablero borrado
-        if (objeto_tablero.es_oculto == 1){
+        if (objeto_tablero.es_oculto == 0){
             $('#'+id_tablero_string +' main .aviso_de_tablero_en_papelera').addClass('ocultar');
         };
         
@@ -1204,7 +1204,7 @@ $('body').on('vclick','.tablero_particular .boton_recuperar',function(){
         if(objeto_maestro_datos.tableros[i].id_tablero == id_tablero_a_recuperar){
             objeto_maestro_datos.tableros[i].es_oculto = false;
             //Actualizo en bd:
-            ep_cargar_tablero(objeto_maestro_usuario.correo, id_tablero_a_recuperar);
+            ep_cargar_tablero(objeto_maestro_usuario.correo, objeto_maestro_datos.tableros[i]);
         };
     };
 
