@@ -1181,37 +1181,10 @@ $('body').on('vclick','.borrar_un_tablero_del_sistema',function(){
 
     console.log('el id del tablero a borra es: '+id_tablero_a_eliminar);
 
-    console.log('lo busco en el array de tableros');
-    for (i in objeto_maestro_datos.tableros){
-        if(objeto_maestro_datos.tableros[i].id_tablero == id_tablero_a_eliminar){
-            console.log('encontré el tablero que tengo que eliminar');
-            console.log('es el tablero: ');
-            console.log(objeto_maestro_datos.tableros[i]);
-            
-            //Primero borro todos los elementos que sean de este tablero
-            borrar_elementos_del_sistema(objeto_maestro_datos.tableros[i].id_tablero);
-
-            var eliminado = objeto_maestro_datos.tableros.splice(i,1);
-            console.log('eliminé el tablero:');
-            console.log(eliminado);
-
-
-        };
-    };
-
-        
-
-        //Guardo los datos en bd y local
-        almacenar_cambios();
-
-        //Recargo página de tableros
-        procesar_tableros_en_vista_de_tableros();
-
-        //Reproceso la lista de borradores en ajustes
-        cargar_lista_de_borradores();
-
-        //Llevo al usuario a la vista de tableros
-        $.mobile.navigate('#tableros');
+    //Primero borro todos los elementos relacionados
+    //Eso lo hago desde el endpoint - borro en db - luego borro en local
+    ep_eliminar_elemento(objeto_maestro_usuario.correo,id_tablero_a_eliminar);
+    //Este mismo endpoint, si no genera excepción, borra el tablero.
 
 });
 
@@ -1229,14 +1202,10 @@ $('body').on('vclick','.tablero_particular .boton_recuperar',function(){
     for(i in objeto_maestro_datos.tableros){
         if(objeto_maestro_datos.tableros[i].id_tablero == id_tablero_a_recuperar){
             objeto_maestro_datos.tableros[i].es_oculto = false;
+            //Actualizo en bd:
+            ep_cargar_tablero(objeto_maestro_usuario.correo, id_tablero_a_recuperar);
         };
     };
-
-        //Guardo los datos en bd y local
-        almacenar_cambios();
-
-        //Recargo página de tableros
-        procesar_tableros_en_vista_de_tableros();
 
         //Reproceso la lista de borradores en ajustes
         cargar_lista_de_borradores();

@@ -23,6 +23,7 @@ var url_ep_crear_usuario;
 var url_ep_cargar_tablero;
 var url_ep_cargar_elemento;
 var url_ep_datos_usuario;
+var url_ep_eliminar_elemento;
 var url_ep_eliminar_tablero;
 
 
@@ -38,7 +39,8 @@ function inicializar_variables(){
     url_ep_cargar_tablero = 'http://id.distritografico.com.ar/queen_back/cargar_tablero.php';
     url_ep_datos_usuario = 'http://id.distritografico.com.ar/queen_back/datos_usuario.php';
     url_ep_cargar_elemento = 'http://id.distritografico.com.ar/queen_back/cargar_elemento.php';
-    url_ep_eliminar_tablero = 'http://id.distritografico.com.ar/queen_back/eliminar_elemento.php'
+    url_ep_eliminar_tablero = 'http://id.distritografico.com.ar/queen_back/eliminar_tablero.php'
+    url_ep_eliminar_elemento = 'http://id.distritografico.com.ar/queen_back/eliminar_elemento.php'
         
     i = 0;
     j = 0;

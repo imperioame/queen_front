@@ -168,14 +168,61 @@ function ep_cargar_elemento(objeto_de_elemento){
     });
 };
 
+
+function ep_eliminar_elemento(correo_usuario, id_tablero){
+    $.post(url_ep_eliminar_elemento, {correo: correo_usuario, id_tablero: id_tablero}, "json")
+    .done(function(){
+
+        //Borre de bd, ahora borro en local
+        //Primero borro todos los elementos que sean de este tablero
+        borrar_elementos_del_sistema(id_tablero);
+
+        //Ahora borro el tablero en bd y local
+        ep_eliminar_tablero(correo_usuario. id_tablero);
+    })
+    .fail(function(response) {
+        console.log('falló en eliminar el elemento. Mensaje del servidor:');
+        console.log(response.mensaje);
+        //return -1;
+    });
+};
+
 function ep_eliminar_tablero(correo_usuario, id_tablero){
     $.post(url_ep_eliminar_tablero, {correo: correo_usuario, id_tablero: id_tablero}, "json")
-    .done(function(response){
+    .done(function(){
         
+        //Borré de bd, ahora borro de local
+        console.log('lo busco en el array de tableros');
+        for (i in objeto_maestro_datos.tableros){
+            if(objeto_maestro_datos.tableros[i].id_tablero == id_tablero){
+                console.log('encontré el tablero que tengo que eliminar');
+                //console.log('es el tablero: ');
+                //console.log(objeto_maestro_datos.tableros[i]);
+
+                var eliminado = objeto_maestro_datos.tableros.splice(i,1);
+                console.log('eliminé el tablero:');
+                console.log(eliminado);
+
+            };
+        };
+
+
+        //Guardo los datos en bd y local
+        guardar_datos_en_localstorage();
+
+        //Recargo página de tableros
+        procesar_tableros_en_vista_de_tableros();
+
+        //Reproceso la lista de borradores en ajustes
+        cargar_lista_de_borradores();
+
+        //Llevo al usuario a la vista de tableros
+        $.mobile.navigate('#tableros');
+
     })
     .fail(function(response) {
         console.log('falló en eliminar el tablero. Mensaje del servidor:');
         console.log(response.mensaje);
         //return -1;
     });
-}
+};
