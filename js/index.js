@@ -191,242 +191,260 @@ console.log("Estoy creando las vistas de los de tableros");
 };
 
 function crear_vista_de_tablero(objeto_tablero, forzar_creacion){
-    //solo creo tableros para los que no estén ocultos
-    if(objeto_tablero.es_oculto == 0 || forzar_creacion == true){
 
-        // Preparo el string del id que le corresponda al tablero
-        var id_tablero_string = 'tablero_numero_' + objeto_tablero.id_tablero;
+    // Preparo el string del id que le corresponda al tablero
+    var id_tablero_string = 'tablero_numero_' + objeto_tablero.id_tablero;
 
-        //Creo la vista 
-        var nueva_vista = '<div data-role="page" id="' + id_tablero_string + '" class="tablero_particular"></div>';
-        //la inserto en el html
-        $('body').append(nueva_vista);
-    
-        //creo el header con título del tablero
-        var header_de_nueva_vista = `<header data-role="header">\n
-        <!-- Botón de buscdor  -->\n
-        <a href="#tableros_buscador` + id_tablero_string +`" data-role="button" data-rel="popup" data-transition="pop" data-position-to="origin" data-icon="lupaw" data-iconshadow="false" data-iconpos="notext" class="ui-btn-right boton_buscar">Buscador</a>\n
-        <!-- Popup buscador -->\n
-        <div class="header_buscador" id="tableros_buscador`+ id_tablero_string +`" data-role="popup" data-history="false">\n
-            <form>\n
-                <input data-type="search" id="buscador_de_` + id_tablero_string +`" placeholder="¿Qué buscas?">\n
-            </form>\n
-        </div>\n
-        <!-- Botón de acciones -->\n
-        <a href="#tableros_acciones`+ id_tablero_string +`" data-role="button" data-rel="popup" data-transition="pop" data-position-to="origin" data-icon="accionesw" data-iconshadow="false" data-iconpos="notext" class="ui-btn-right">Acciones</a>\n
-        <!-- Popup acciones -->\n
-        <div class="header_acciones" id="tableros_acciones`+ id_tablero_string +`" data-role="popup" data-history="false">\n
-        <ul data-role="listview" data-icon="false">\n
-            <li class="ui-li-icon"><a href="#" data-role="button" data-icon="descartar" data-iconshadow="false" data-iconpos="notext" class="descartar">Descartar</a></li>\n
-            <!-- <li class="ui-li-icon"><a href="#" data-role="button" data-icon="" data-iconshadow="false" data-iconpos="notext" class="cambiar_color">Cambiar color</a></li> -->\n
-            <li class="ui-li-icon fijar"><a href="#" data-role="button" data-icon="fijar" data-iconshadow="false" data-iconpos="notext">Fijar tablero</a></li>\n
-            <!-- <li class="ui-li-icon"><a href="#" data-role="button" data-icon="estadisticas" data-iconshadow="false" data-iconpos="notext" class="estadisticas">Ver estadísticas</a></li> -->\n
-            </ul>\n
-        </div>\n
-        <!-- Botón de back -->\n
-        <a href="#" data-rel="back" data-icon="atrasw" data-iconpos="notext" class="ui-btn-left">atras</a>\n
-        <div class="degrade_de_fondo_header"></div>\n
-        <div class="header_texto">\n
-            <h1>`+ objeto_tablero.titulo +`</h1>\n
-            <p class="descripcion_del_header"></p>\n
-        </div>\n
-        </header>`;
-    
-        //Se lo agrego al elemento nuevo
-        $('#'+id_tablero_string).append(header_de_nueva_vista);
+    //Primero que nada me fijo si este objeto ya tenía vista.
+    //Si tenía vista no puedo volver a crearla, porque rompe.
+    if ($('#'+id_tablero_string).length == 0){
+        console.log('No existe vista de este tablero, la creo');
 
-    
-        //Creo el main - le pongo el contenido básico y por defecto
-        var main_de_nueva_vista = `<main role="main" class="ui-content" data-filter="true" data-input="#buscador_de_` + id_tablero_string +`">\n
-        <!-- Botón para agrgar tableros - todo por js -->\n
-        <div class="agregar">\n
-        </div>\n
-        <!-- A mostrar en caso de que el usuario no tenga contenido en el tablero -->\n
-        <div class="aviso_de_vista_vacia">\n
-            <h1>Nada por aquí.</h1>\n
-            <h2>¡Presioná el botón <strong>+</strong> para agregar contenido!</h2>\n
-        </div>\n
-        <!-- A mostrar en caso de que el tablero esté en la papelera -->\n
-        <div class="aviso_de_tablero_en_papelera">\n
-            <h1>Tablero en papelera.</h1>\n
-            <p>Este tablero se encuentra en la papelera. Puede recuperarlo para visualizarlo en la vista de tableros, o puede eliminarlo definitivamente</p>\n
-            <a href="#" class="ui-btn ui-btn-inline ui-shadow boton_recuperar ui-corner-all">Recuperar</a>\n
-            <a href="#popup_confirmacion_borrar_`+ id_tablero_string +`" data-rel="popup" data-position-to="window" class="ui-btn ui-btn-inline ui-shadow boton_eliminar color_rojo ui-corner-all">Eliminar</a>\n
-        </div>\n
-        </main>\n
-        `;
+        //solo creo tableros para los que no estén ocultos
+        if(objeto_tablero.es_oculto == 0 || forzar_creacion == true){
 
-    
-        //Se lo agrego a la vista nueva
-        $('#'+id_tablero_string).append(main_de_nueva_vista);
 
-            
-        //detecto si el tablero esta en papelera, si no lo está, entonces oculto el mensaje de tablero borrado
-        if (objeto_tablero.es_oculto == 0){
-            $('#'+id_tablero_string +' main .aviso_de_tablero_en_papelera').addClass('ocultar');
-        };
+
+            //Creo la vista 
+            var nueva_vista = '<div data-role="page" id="' + id_tablero_string + '" class="tablero_particular"></div>';
+            //la inserto en el html
+            $('body').append(nueva_vista);
+            console.log('puse una nueva vista dle tablero');
         
-
-    /*
-    // Por ahora no va
-                var modelo_popup = `<div data-role="popup" id="tooltip_status_`+ objeto_tablero.id_tablero +`" class="ui-content tooltip_status">\n
-                    <p><strong></strong></p>\n
-                </div>\n
-                <div data-role="popup" id="tooltip_deadline_`+ objeto_tablero.id_tablero + `" class="ui-content tooltip_deadline">\n
-                    <p></p>\n
-                </div>\n`;
-    
-                //Le agrego los modelos de popup de status y deadline - estos se completarán dinámicamente cuando se los abra
-                $('#'+id_tablero_string+' main').append(modelo_popup);
-      */          
-    
-        //Creo el footer
-        var footer_de_nueva_vista = `<footer data-role="footer" data-position="fixed">\n
-            <div data-role="navbar">\n
-                <ul>\n
-                    <li><a href="#inicio" data-icon="hoy">Mi día</a></li>\n
-                    <li><a href="#tableros" data-icon="tableros">Tableros</a></li>\n
-                    <!-- <li><a href="#calendario" data-icon="calendario">Calendario</a></li> -->\n
-                    <li><a href="#ajustes" data-icon="ajustes">Ajustes</a></li>\n
+            //creo el header con título del tablero
+            var header_de_nueva_vista = `<header data-role="header">\n
+            <!-- Botón de buscdor  -->\n
+            <a href="#tableros_buscador` + id_tablero_string +`" data-role="button" data-rel="popup" data-transition="pop" data-position-to="origin" data-icon="lupaw" data-iconshadow="false" data-iconpos="notext" class="ui-btn-right boton_buscar">Buscador</a>\n
+            <!-- Popup buscador -->\n
+            <div class="header_buscador" id="tableros_buscador`+ id_tablero_string +`" data-role="popup" data-history="false">\n
+                <form>\n
+                    <input data-type="search" id="buscador_de_` + id_tablero_string +`" placeholder="¿Qué buscas?">\n
+                </form>\n
+            </div>\n
+            <!-- Botón de acciones -->\n
+            <a href="#tableros_acciones`+ id_tablero_string +`" data-role="button" data-rel="popup" data-transition="pop" data-position-to="origin" data-icon="accionesw" data-iconshadow="false" data-iconpos="notext" class="ui-btn-right">Acciones</a>\n
+            <!-- Popup acciones -->\n
+            <div class="header_acciones" id="tableros_acciones`+ id_tablero_string +`" data-role="popup" data-history="false">\n
+            <ul data-role="listview" data-icon="false">\n
+                <li class="ui-li-icon"><a href="#" data-role="button" data-icon="descartar" data-iconshadow="false" data-iconpos="notext" class="descartar">Descartar</a></li>\n
+                <!-- <li class="ui-li-icon"><a href="#" data-role="button" data-icon="" data-iconshadow="false" data-iconpos="notext" class="cambiar_color">Cambiar color</a></li> -->\n
+                <li class="ui-li-icon fijar"><a href="#" data-role="button" data-icon="fijar" data-iconshadow="false" data-iconpos="notext">Fijar tablero</a></li>\n
+                <!-- <li class="ui-li-icon"><a href="#" data-role="button" data-icon="estadisticas" data-iconshadow="false" data-iconpos="notext" class="estadisticas">Ver estadísticas</a></li> -->\n
                 </ul>\n
             </div>\n
-        </footer>`;
-    
-        //Se lo agrego a la vista nueva
-        $('#'+id_tablero_string).append(footer_de_nueva_vista);
-
-    
-        //Creo el spinner desplegable
-        var menu_agregar_elemento_de_nueva_vista = `<div class="menu_agregar_elemento">\n
-            <div class="bajar">\n
-                <h3>Esconder Panel</h3>\n
+            <!-- Botón de back -->\n
+            <a href="#" data-rel="back" data-icon="atrasw" data-iconpos="notext" class="ui-btn-left">atras</a>\n
+            <div class="degrade_de_fondo_header"></div>\n
+            <div class="header_texto">\n
+                <h1>`+ objeto_tablero.titulo +`</h1>\n
+                <p class="descripcion_del_header"></p>\n
             </div>\n
-            <form>\n
-                <input type="text" value="" placeholder="Titulo" autofocus required>\n
-                <label for="es_lista`+ id_tablero_string +`">¿Es elemento de lista?</label>\n
-                <input type="checkbox" name="es_lista" id="es_lista`+ id_tablero_string +`">\n
-                <select name="status">\n
-                    <option value="">Sin status</option>\n
-                </select>\n
-                <label for="input_deadline_`+ id_tablero_string +`">Fecha límite</label>\n
-                <input type="date" name="Fecha límite" id="input_deadline_`+ id_tablero_string +`" class="selector_deadline">\n
-                <input type="submit" value="Guardar">\n
-            </form>\n
-        </div>`;
-    
-        //Se lo agrego a la vista nueva
-        $('#'+id_tablero_string).append(menu_agregar_elemento_de_nueva_vista);
-
-    
-        //Recorro el vector de estados dentro del objeto maestro e inyecto
-        for (i in objeto_maestro_datos.estados) {
-            console.log('entre al buccle para crear las options');
-
-            //Creo la etiqueta
-            var option_nueva = '<option value="'+ objeto_maestro_datos.estados[i].valor +'">'+ objeto_maestro_datos.estados[i].titulo +'</option>';
-
-            //Busco el select y le agrego la options 
-                $('#'+id_tablero_string+' form select').append(option_nueva);
-        };
-
-
-        var popup_confirm_eliminar_tablero = `<!-- Popup para eliminar el tablero de la db-->\n
-        <div data-role="popup" id="popup_confirmacion_borrar_`+ id_tablero_string +`" class="popup_confirmacion_borrar_tab">\n
-            <div>
-                <div data-role="header">\n
-                    <h1>¿Borrar Tablero?</h1>\n
-                    </div>\n
-                <div role="main" class="ui-content">\n
-                        <h2 class="ui-title">¿Está seguro de borrar el caché?</h2>\n
-                        <p>Esto borrará el tablero definitivamente. Esta acción no se puede deshacer.</p>\n
-                            <a href="#" class="ui-btn ui-corner-all ui-shadow ui-btn-inline ui-btn-b" data-rel="back">Cancelar</a>\n
-                            <a href="#" id="borrar_`+ id_tablero_string +`" class="ui-btn ui-corner-all ui-shadow ui-btn-inline ui-btn-b color_rojo borrar_un_tablero_del_sistema" data-transition="flow">Borrar</a>\n
-                </div>\n
-            </div>
-        </div>`;
-
-
-        $('#'+id_tablero_string).append(popup_confirm_eliminar_tablero);
-        $('#'+id_tablero_string +' main .aviso_de_tablero_en_papelera a').enhanceWithin();
-        /*$('#'+id_tablero_string +' #popup_confirmacion_borrar_'+id_tablero_string).popup({
-            dismissible: false,
-            overlyaTheme: 'b',
-            transition: 'pop'
-        });*/
-
-/*
-        var popup_confirm_eliminar_tablero = `<div id="popup_confirmacion_borrar_`+ id_tablero_string +`"></div>`;
-        $('#'+id_tablero_string).append(popup_confirm_eliminar_tablero);
+            </header>`;
         
-        $('body').on('click', '#'+id_tablero_string+' .boton_eliminar' , function () {
-            //create a div for the popup
-            var $popUp = $('#popup_confirmacion_borrar_'+ id_tablero_string).popup({
-                dismissible: false,
-                overlyaTheme: "b",
-                transition: "pop"
-            }).on("popupafterclose", function () {
-                //remove the popup when closing
-                $(this).remove();
-            }).css({
-                'width': '270px',
-                    'height': '200px',
-                    'padding': '5px'
-            });
-            //create a title for the popup
-            $("<h2/>", {
-                text: "Header"
-            }).appendTo($popUp);
-        
-            //create a message for the popup
-            $("<p/>", {
-                text: "Welcome!"
-            }).appendTo($popUp);
-        
-            //create a form for the pop up
-            $("<form>").append($("<input/>", {
-                type: "password",
-                name: "password",
-                placeholder: "Enter Password.."
-            })).appendTo($popUp);
-        
-            //Create a submit button(fake)
-            $("<a>", {
-                text: "Submit"
-            }).buttonMarkup({
-                inline: false,
-                mini: true,
-                icon: "check"
-            }).on("click", function () {
-                $popUp.popup("close");
-                //that.subscribeToAsset(callback);
-            }).appendTo($popUp);
-        
-            //create a back button
-            $("<a>", {
-                text: "Back",
-                    "data-rel": "back"
-            }).buttonMarkup({
-                inline: false,
-                mini: true,
-                theme: "e",
-                icon: "back"
-            }).appendTo($popUp);
-        
-            $popUp.popup('open').trigger("create");
-        });
-*/
 
-        //Populo el tablero:
-        for (i in objeto_maestro_datos.elementos){
-            if( objeto_maestro_datos.elementos[i].id_tablero === objeto_tablero.id_tablero){
-                crear_contenido_en_vista_de_tablero(objeto_maestro_datos.elementos[i]);
+        
+            //Se lo agrego al elemento nuevo
+            $('#'+id_tablero_string).append(header_de_nueva_vista);
+            console.log('puse un nuevo Header dle tablero');
+        
+            //Creo el main - le pongo el contenido básico y por defecto
+            var main_de_nueva_vista = `<main role="main" class="ui-content" data-filter="true" data-input="#buscador_de_` + id_tablero_string +`">\n
+            <!-- Botón para agrgar tableros - todo por js -->\n
+            <div class="agregar">\n
+            </div>\n
+            <!-- A mostrar en caso de que el usuario no tenga contenido en el tablero -->\n
+            <div class="aviso_de_vista_vacia">\n
+                <h1>Nada por aquí.</h1>\n
+                <h2>¡Presioná el botón <strong>+</strong> para agregar contenido!</h2>\n
+            </div>\n
+            <!-- A mostrar en caso de que el tablero esté en la papelera -->\n
+            <div class="aviso_de_tablero_en_papelera">\n
+                <h1>Tablero en papelera.</h1>\n
+                <p>Este tablero se encuentra en la papelera. Puede recuperarlo para visualizarlo en la vista de tableros, o puede eliminarlo definitivamente</p>\n
+                <a href="#" class="ui-btn ui-btn-inline ui-shadow boton_recuperar ui-corner-all">Recuperar</a>\n
+                <a href="#popup_confirmacion_borrar_`+ id_tablero_string +`" data-rel="popup" data-position-to="window" class="ui-btn ui-btn-inline ui-shadow boton_eliminar color_rojo ui-corner-all">Eliminar</a>\n
+            </div>\n
+            </main>\n
+            `;
+
+        
+            //Se lo agrego a la vista nueva
+            $('#'+id_tablero_string).append(main_de_nueva_vista);
+            console.log('puse un nuevo main dle tablero');
+
+                
+            //detecto si el tablero esta en papelera, si no lo está, entonces oculto el mensaje de tablero borrado
+            if (objeto_tablero.es_oculto == 0){
+                $('#'+id_tablero_string +' main .aviso_de_tablero_en_papelera').addClass('ocultar');
+                console.log('el tablero no está oculto, no debe tener msj de oculto');
             };
+            
+
+        /*
+        // Por ahora no va
+                    var modelo_popup = `<div data-role="popup" id="tooltip_status_`+ objeto_tablero.id_tablero +`" class="ui-content tooltip_status">\n
+                        <p><strong></strong></p>\n
+                    </div>\n
+                    <div data-role="popup" id="tooltip_deadline_`+ objeto_tablero.id_tablero + `" class="ui-content tooltip_deadline">\n
+                        <p></p>\n
+                    </div>\n`;
+        
+                    //Le agrego los modelos de popup de status y deadline - estos se completarán dinámicamente cuando se los abra
+                    $('#'+id_tablero_string+' main').append(modelo_popup);
+        */          
+        
+            //Creo el footer
+            var footer_de_nueva_vista = `<footer data-role="footer" data-position="fixed">\n
+                <div data-role="navbar">\n
+                    <ul>\n
+                        <li><a href="#inicio" data-icon="hoy">Mi día</a></li>\n
+                        <li><a href="#tableros" data-icon="tableros">Tableros</a></li>\n
+                        <!-- <li><a href="#calendario" data-icon="calendario">Calendario</a></li> -->\n
+                        <li><a href="#ajustes" data-icon="ajustes">Ajustes</a></li>\n
+                    </ul>\n
+                </div>\n
+            </footer>`;
+        
+            //Se lo agrego a la vista nueva
+            $('#'+id_tablero_string).append(footer_de_nueva_vista);
+            console.log('puse un nuevo footer dle tablero');
+
+
+        
+            //Creo el spinner desplegable
+            var menu_agregar_elemento_de_nueva_vista = `<div class="menu_agregar_elemento">\n
+                <div class="bajar">\n
+                    <h3>Esconder Panel</h3>\n
+                </div>\n
+                <form>\n
+                    <input type="text" value="" placeholder="Titulo" autofocus required>\n
+                    <label for="es_lista`+ id_tablero_string +`">¿Es elemento de lista?</label>\n
+                    <input type="checkbox" name="es_lista" id="es_lista`+ id_tablero_string +`">\n
+                    <select name="status">\n
+                        <option value="">Sin status</option>\n
+                    </select>\n
+                    <label for="input_deadline_`+ id_tablero_string +`">Fecha límite</label>\n
+                    <input type="date" name="Fecha límite" id="input_deadline_`+ id_tablero_string +`" class="selector_deadline">\n
+                    <input type="submit" value="Guardar">\n
+                </form>\n
+            </div>`;
+        
+            //Se lo agrego a la vista nueva
+            $('#'+id_tablero_string).append(menu_agregar_elemento_de_nueva_vista);
+
+        
+            //Recorro el vector de estados dentro del objeto maestro e inyecto
+            for (i in objeto_maestro_datos.estados) {
+                console.log('entre al buccle para crear las options');
+
+                //Creo la etiqueta
+                var option_nueva = '<option value="'+ objeto_maestro_datos.estados[i].valor +'">'+ objeto_maestro_datos.estados[i].titulo +'</option>';
+
+                //Busco el select y le agrego la options 
+                    $('#'+id_tablero_string+' form select').append(option_nueva);
+            };
+
+
+            var popup_confirm_eliminar_tablero = `<!-- Popup para eliminar el tablero de la db-->\n
+            <div data-role="popup" id="popup_confirmacion_borrar_`+ id_tablero_string +`" class="popup_confirmacion_borrar_tab">\n
+                <div>
+                    <div data-role="header">\n
+                        <h1>¿Borrar Tablero?</h1>\n
+                        </div>\n
+                    <div role="main" class="ui-content">\n
+                            <h2 class="ui-title">¿Está seguro de borrar el caché?</h2>\n
+                            <p>Esto borrará el tablero definitivamente. Esta acción no se puede deshacer.</p>\n
+                                <a href="#" class="ui-btn ui-corner-all ui-shadow ui-btn-inline ui-btn-b" data-rel="back">Cancelar</a>\n
+                                <a href="#" id="borrar_`+ id_tablero_string +`" class="ui-btn ui-corner-all ui-shadow ui-btn-inline ui-btn-b color_rojo borrar_un_tablero_del_sistema" data-transition="flow">Borrar</a>\n
+                    </div>\n
+                </div>
+            </div>`;
+
+
+            $('#'+id_tablero_string).append(popup_confirm_eliminar_tablero);
+            $('#'+id_tablero_string +' main .aviso_de_tablero_en_papelera a').enhanceWithin();
+            /*$('#'+id_tablero_string +' #popup_confirmacion_borrar_'+id_tablero_string).popup({
+                dismissible: false,
+                overlyaTheme: 'b',
+                transition: 'pop'
+            });*/
+
+    /*
+            var popup_confirm_eliminar_tablero = `<div id="popup_confirmacion_borrar_`+ id_tablero_string +`"></div>`;
+            $('#'+id_tablero_string).append(popup_confirm_eliminar_tablero);
+            
+            $('body').on('click', '#'+id_tablero_string+' .boton_eliminar' , function () {
+                //create a div for the popup
+                var $popUp = $('#popup_confirmacion_borrar_'+ id_tablero_string).popup({
+                    dismissible: false,
+                    overlyaTheme: "b",
+                    transition: "pop"
+                }).on("popupafterclose", function () {
+                    //remove the popup when closing
+                    $(this).remove();
+                }).css({
+                    'width': '270px',
+                        'height': '200px',
+                        'padding': '5px'
+                });
+                //create a title for the popup
+                $("<h2/>", {
+                    text: "Header"
+                }).appendTo($popUp);
+            
+                //create a message for the popup
+                $("<p/>", {
+                    text: "Welcome!"
+                }).appendTo($popUp);
+            
+                //create a form for the pop up
+                $("<form>").append($("<input/>", {
+                    type: "password",
+                    name: "password",
+                    placeholder: "Enter Password.."
+                })).appendTo($popUp);
+            
+                //Create a submit button(fake)
+                $("<a>", {
+                    text: "Submit"
+                }).buttonMarkup({
+                    inline: false,
+                    mini: true,
+                    icon: "check"
+                }).on("click", function () {
+                    $popUp.popup("close");
+                    //that.subscribeToAsset(callback);
+                }).appendTo($popUp);
+            
+                //create a back button
+                $("<a>", {
+                    text: "Back",
+                        "data-rel": "back"
+                }).buttonMarkup({
+                    inline: false,
+                    mini: true,
+                    theme: "e",
+                    icon: "back"
+                }).appendTo($popUp);
+            
+                $popUp.popup('open').trigger("create");
+            });
+    */
+
+            //Populo el tablero:
+            for (i in objeto_maestro_datos.elementos){
+                if( objeto_maestro_datos.elementos[i].id_tablero === objeto_tablero.id_tablero){
+                    crear_contenido_en_vista_de_tablero(objeto_maestro_datos.elementos[i]);
+                };
+            };
+
+        }else{
+            console.log('el tablero a crear vista está oculto y no se solicitó forzar la creación - no creo nada');
         };
 
     }else{
-        console.log('el tablero a crear vista está oculto y no se solicitó forzar la creación - no creo nada');
+        console.log('Este tablero ya tenía vista, no creo nada.');
     };
-    
 
 };
 
@@ -554,12 +572,12 @@ function procesar_tableros_en_vista_de_tableros(){
 
     //Me fijo que haya datos de tableros - tal vez no hay nada y no hay que hacer nada
     if(objeto_maestro_datos.tableros.length){
-        console.log('Existen tableros, los voy a cargar');
+        console.log('Existen tableros, los voy a cargar en la vista de tableros');
 
 
         //Recorro el array
         for (i in objeto_maestro_datos.tableros){
-            console.log('tablero numero '+i);
+            console.log('tablero numero '+objeto_maestro_datos.tableros[i].id_tablero);
 
             //Si está oculto lo ignoro
             if(objeto_maestro_datos.tableros[i].es_oculto == 0){
