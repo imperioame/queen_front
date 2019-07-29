@@ -82,12 +82,15 @@ function crear_contenido_en_vista_de_tablero(objeto_de_elementos){
         */
 
 
-       var contenido_de_lista = `<label for="checkbox_elemento_`+ objeto_de_elementos.id_tablero +`_`+ objeto_de_elementos.indice_elemento +`">`+ objeto_de_elementos.contenido + `</label>\n
-       <input type="checkbox" value="Realizado" id="checkbox_elemento_`+ objeto_de_elementos.id_tablero +`_`+ objeto_de_elementos.indice_elemento +`" name=checkbox_elemento_`+ objeto_de_elementos.id_tablero +`_`+ objeto_de_elementos.indice_elemento +` ">
+       var contenido_de_lista = `<label for="checkbox_elemento_`+ objeto_de_elementos.id_tablero +`_`+ objeto_de_elementos.indice_elemento +`">`+ objeto_de_elementos.contenido + `
+       <p class="ocultar id_del_elemento">`+ objeto_de_elementos.id_elemento +`</p>\n
+       </label>\n
+       <input type="checkbox" value="Realizado" id="checkbox_elemento_`+ objeto_de_elementos.id_tablero +`_`+ objeto_de_elementos.indice_elemento +`" name=checkbox_elemento_`+ objeto_de_elementos.id_tablero +`_`+ objeto_de_elementos.indice_elemento +` ">\n
        <!-- Por ahora esto no funciona\n
        <div class="props">\n
                         <div class="estado_elemento `+ css_de_status +`">p</div>\n
                         <div class="deadline"><img src="imgs/icons/calendario.svg" alt="Fecha límite"></div>\n
+                        
         </div> -->`;
 
         /*
@@ -132,7 +135,7 @@ function crear_contenido_en_vista_de_tablero(objeto_de_elementos){
 
         //Me fijo si está realizado o no, si lo está, lo marco tildado
         if(objeto_de_elementos.realizado == 1){
-            $('#' + id_del_tablero +' main form fieldset #checkbox_elemento_'+ objeto_de_elementos.id_tablero +'_'+ objeto_de_elementos.indice_elemento).attr("checked",true).checkboxradio("refresh");
+            $('#' + id_del_tablero +' main form fieldset #checkbox_elemento_'+ objeto_de_elementos.id_tablero +'_'+ objeto_de_elementos.indice_elemento).prop('checked',true).checkboxradio('refresh');
         };
 
 
@@ -522,7 +525,7 @@ function cargar_elementos_en_inicio(){
 
                 //Me fijo si está realizado o no, si lo está, lo marco tildado
                 if(array_de_elementos[i].realizado == 1){
-                    $('#' + id_del_tablero +' main form fieldset #checkbox_' + id_tablero_string + array_de_elementos[i].indice_elemento).attr("checked",true).checkboxradio("refresh");
+                    $('#' + id_del_tablero +' main form fieldset #checkbox_' + id_tablero_string + array_de_elementos[i].indice_elemento).prop("checked",true).checkboxradio('refresh');
                 };
 
                 //también tengo que ocultar el aviso_de_vista_vacia
@@ -535,7 +538,7 @@ function cargar_elementos_en_inicio(){
     };
 
     //Refresheo la listview
-    $('#inicio main ul').listview();
+    //$('#inicio main ul').listview();
 
 };
 
@@ -955,11 +958,6 @@ Comportamientos de la interfáz
 -------------------------------------------------------------------------------------------------------
 */ 
 
-$(document).on('ready', function () {
-    $.mobile.defaultPageTransition = 'fade';
-    $.mobile.defaultDialogTransition = 'pop';
-});
-
 
 //botones en pantalla de logueo:
 $('#crear_cuenta').on('vclick', function(){
@@ -1065,12 +1063,40 @@ $('.menu_agregar_tablero .bajar').on('vclick', function(){
 $('#inicio main form').on('taphold', 'div', function(){
     console.log('longpreseaste un item en inicio, te quiero llevar a:');
     console.log($(this).find('.clase_id_tablero_string_para_inicio').text());
-    $(this).children('input:checkbox').attr("checked",false).checkboxradio("refresh");
+    //$(this).children('input:checkbox').prop('checked',false).checkboxradio('refresh');
     $.mobile.navigate($(this).find('.clase_id_tablero_string_para_inicio').text());
 });
 
 
 //Chequeo de elementos de los elementos del tablero de inicio
+$('#inicio').on('change','main form [type=checkbox]', function(){
+    console.log('marcaste como realizado un elemento en la vista de tableros');
+    //detecto a que elemento le corresponde:
+    var id_elemento_detectado = $(this).parent().find('.clase_id_elemento_para_inicio').text();
+    console.log('id encontrado: '+id_elemento_detectado);
+    
+
+    //id_elemento_detectado = averiguar_id_tablero(id_elemento_detectado);
+
+    //console.log($(this).prop("checked"));
+
+    for(i in objeto_maestro_datos.elementos){
+        console.log('busco al elemento en el objeto maestro');
+        if(objeto_maestro_datos.elementos[i].id_elemento == id_elemento_detectado){
+            console.log('encontré el elemento, actualizo su estaod y mando a guardar');
+            if($(this).prop("checked")){
+                objeto_maestro_datos.elementos[i].realizado = 1;
+                console.log('se chequeó, lo guardo como "realizado"');
+            }else{
+                objeto_maestro_datos.elementos[i].realizado = 0;
+                console.log('se deschequeó, lo guardo como "no realizado"');
+            }
+            //actualizo en bd y local
+            ep_cargar_elemento(objeto_maestro_usuario.correo, objeto_maestro_datos.elementos[i]);
+        };
+    };
+});
+/*
 $('#inicio main form').on('vclick','div', function(){
     console.log('marcaste como realizado un elemento en inicio');
     //detecto a que elemento le corresponde:
@@ -1092,7 +1118,7 @@ $('#inicio main form').on('vclick','div', function(){
 
     
 });
-
+*/
 
 //Cuando se abre la app, no renderea las vistas de tableros ocultos para mejorar la eficiencia
 //En este caso, si el usuario quiere volver a ingresar desde la papelera, entonces tengo que crear las vistas
@@ -1125,6 +1151,41 @@ $('#tableros main').on('vclick', '.tablero', function(){
 //Función del botón uqe borra todo
 $('#ajustes #popup_confirmacion_borrar #borrar_todo').on('vclick', function(){
     borrar_localstorage();
+});
+
+//Func de tableros particulares:
+
+//Chequeo de elementos realizados (en su tablero)
+$('body').on('change','.tablero_particular main form [type=checkbox]', function(){
+    //var es_lista = $('#'+id_tablero_calculado+' .menu_agregar_elemento form input:checkbox').prop("checked");
+    console.log('marcaste como realizado un elemento');
+    //detecto a que elemento le corresponde:
+    //console.log($(this).parent().parent().parent().parent().parent().parent());
+    //console.log($(this).parent().parent().parent().parent().parent().parent().attr('id'));
+    //var id_elemento_detectado = $(this).parent().parent().parent().parent().parent().parent().attr('id');
+    var id_elemento_detectado = $(this).parent().find('.id_del_elemento').text();
+    console.log('id encontrado: '+id_elemento_detectado);
+    
+
+    //id_elemento_detectado = averiguar_id_tablero(id_elemento_detectado);
+
+    //console.log($(this).prop("checked"));
+
+    for(i in objeto_maestro_datos.elementos){
+        console.log('busco al elemento en el objeto maestro');
+        if(objeto_maestro_datos.elementos[i].id_elemento == id_elemento_detectado){
+            console.log('encontré el elemento, actualizo su estaod y mando a guardar');
+            if($(this).prop("checked")){
+                objeto_maestro_datos.elementos[i].realizado = 1;
+                console.log('se chequeó, lo guardo como "realizado"');
+            }else{
+                objeto_maestro_datos.elementos[i].realizado = 0;
+                console.log('se deschequeó, lo guardo como "no realizado"');
+            }
+            //actualizo en bd y local
+            ep_cargar_elemento(objeto_maestro_usuario.correo, objeto_maestro_datos.elementos[i]);
+        };
+    };
 });
 
 
@@ -1256,6 +1317,11 @@ $('body').on('vclick','.tablero_particular .boton_recuperar',function(){
         $('#'+ id_del_tablero_a_recuperar_formato_texto_completo +' main .aviso_de_tablero_en_papelera').addClass('ocultar');
 
 });
+
+
+
+
+
 
 //Validador del 'repetir contraseña'
 $('#repetir_contrasena').on('keyup', function(){
@@ -1405,7 +1471,7 @@ $('body').on('submit', '.tablero_particular .menu_agregar_elemento form',functio
     $('#'+id_tablero_calculado+' .menu_agregar_elemento form input:first-child').val('');
 
     var es_lista = $('#'+id_tablero_calculado+' .menu_agregar_elemento form input:checkbox').prop("checked");
-    $('#'+id_tablero_calculado+' .menu_agregar_elemento form input:checkbox').prop('checked', false).checkboxradio("refresh");
+    $('#'+id_tablero_calculado+' .menu_agregar_elemento form input:checkbox').prop('checked', false).checkboxradio('refresh');
 
     var status = $('#'+id_tablero_calculado+' .menu_agregar_elemento form option:selected').val();
     $('#'+id_tablero_calculado+' .menu_agregar_elemento form select')[0].selectedIndex = 0;
@@ -1579,4 +1645,4 @@ function borrar_localstorage(){
 
     //Lo llevo a la vista de bienvenida para que se vuelva a loguear
     $.mobile.navigate('#bienvenida');
-}
+};

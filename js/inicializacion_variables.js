@@ -51,7 +51,7 @@ function inicializar_variables(){
     url_ep_eliminar_tablero = 'localhost/queen_back/php/eliminar_tablero.php'
     url_ep_eliminar_elemento = 'localhost/queen_back/php/eliminar_elemento.php'
     */
-   
+
     i = 0;
     j = 0;
     subobjeto_de_tablero = {};
@@ -122,6 +122,9 @@ Obtención de datos de localstorage
 -------------------------------------------------------------------------------------------------------
 */ 
 $(document).on('ready', function () {
+    //ajuste de transición por defecto
+    $.mobile.defaultPageTransition = 'fade';
+    $.mobile.defaultDialogTransition = 'pop';
 
     var datos_guardados = window.localStorage.getItem('datos_app');
     var dato_de_usuario_guardado = window.localStorage.getItem('datos_usuario');
