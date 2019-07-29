@@ -306,6 +306,13 @@ main .agregar:hover{
     margin: 0 0 0 30px;
 }
 
+#inicio form label h2{
+    font-weight: 700 !important;
+}
+
+#inicio form label p{
+    font-weight: 300 !important;
+}
 /*
 .listview_inicio_estado {
 
@@ -326,13 +333,15 @@ main .agregar:hover{
     vertical-align: middle;
 
 }
-*/
+
 .listview_inicio_estado p {
     text-align: center;
     font-weight: 700 !important;
     color: white;
     vertical-align: middle;
 }
+*/
+
 
 /*
 .listview_inicio_checkbox {
@@ -374,12 +383,12 @@ main .agregar:hover{
 #tableros .ui-content .tablero {
     display: block;
     width: 98%;
-    border: 1px solid rgba(0, 0, 0, .2);
+    /*border: 1px solid rgba(0, 0, 0, .2);*/
     border-radius: 10px;
     padding: 0.7em;
     margin: 2vh 1%;
 
-    background-color: beige;
+    background-color: rgb(255, 237, 154);
     box-sizing: border-box;
 
     font-family: "Roboto";
@@ -500,7 +509,8 @@ main .agregar:hover{
 }
 
 .img_de_perfil img {
-    max-width: 50%;
+    width: 50%;
+    max-width: 500px;
     border-radius: 50%;
     text-align: center;
 }

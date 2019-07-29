@@ -80,12 +80,20 @@ function inicializar_variables(){
 
     // Vector de archivos de img para los header
     imagenes_fondo_header = [];
+    imagenes_fondo_header[0] = "url(./imgs/arte_antiguo.jpg)";
+    imagenes_fondo_header[1] = "url(./imgs/astronomia.jpg)";
+    imagenes_fondo_header[2] = "url(./imgs/floral.jpg)";
+    imagenes_fondo_header[3] = "url(./imgs/lineas.jpg)";
+    imagenes_fondo_header[4] = "url(./imgs/semillas.jpg)";
+    imagenes_fondo_header[5] = "url(./imgs/triangulos.jpg)";
+    /*
+    Imágenes de mi autoría. No se utilizan porque requieren ajustes y retoques para quedar bien
     imagenes_fondo_header[0] = "url(./imgs/bring_it.jpg)";
     imagenes_fondo_header[1] = "url(./imgs/aware.jpg)";
     imagenes_fondo_header[2] = "url(./imgs/barro.jpg)";
     imagenes_fondo_header[3] = "url(./imgs/camosas.jpg)";
     imagenes_fondo_header[4] = "url(./imgs/destino.jpg)";
-
+    */
 
     // Array de status - incluye colores
     objeto_maestro_datos.estados = [{
@@ -143,7 +151,7 @@ $(document).on('ready', function () {
         
         //Hay datos guardados = usuario ya logueado
         //Salteo la página de bienvenida
-        $.mobile.navigate('#inicio');
+        //$.mobile.navigate('#inicio');
 
     }else{
         console.log('No hay nada en localstorate');

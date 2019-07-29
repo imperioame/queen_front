@@ -525,7 +525,8 @@ function cargar_elementos_en_inicio(){
 
                 //Me fijo si está realizado o no, si lo está, lo marco tildado
                 if(array_de_elementos[i].realizado == 1){
-                    $('#' + id_del_tablero +' main form fieldset #checkbox_' + id_tablero_string + array_de_elementos[i].indice_elemento).prop("checked",true).checkboxradio('refresh');
+                    //console.log('este elemento está realizado: '+array_de_elementos[i].contenido);
+                    $('#inicio main form #checkbox_' + id_tablero_string + array_de_elementos[i].indice_elemento).prop("checked",true).checkboxradio('refresh');
                 };
 
                 //también tengo que ocultar el aviso_de_vista_vacia
@@ -718,7 +719,7 @@ function procesar_tableros_en_vista_de_tableros(){
 function cargar_lista_de_borradores(){
     $("#lista_de_borradores").remove();
 
-    var nuevo_collapsible = '<div id="lista_de_borradores" data-collapsed-icon="descartar" data-expanded-icon="descartar"></div>';
+    var nuevo_collapsible = '<div id="lista_de_borradores" data-collapsed-icon="descartar" data-expanded-icon="descartar" data-filter="true" data-input="#buscador_de_ajustes"></div>';
 
     $('#ajustes main').append(nuevo_collapsible);
 
@@ -761,37 +762,6 @@ Funciones generales
 -------------------------------------------------------------------------------------------------------
 */ 
 
-//Para saber que elemento corresponde a que tablero - es solo el ordenamiento, la aplicación está en la función creadora
-/*
-function comparar_elementos_por_tablero( a, b ) {
-    console.log('entre a comparar ids de tableros en el elemento');
-    if ( a.id_tablero < b.id_tablero ){
-      return -1;
-      console.log('di una respuesta -1 en la comparación');
-    }
-    if ( a.id_tablero > b.id_tablero ){
-      return 1;
-      console.log('di respuesta 1 en comparacion');
-    }
-    return 0;
-    console.log('di respuesta 0 en comparación - significa uqe son iguiales');
-};
-*/
-//Para ordenar por fecha los elementos - es solo el ordenamiento, la aplicación está en la función creadora
-/*function comparar_elementos_por_fecha( a, b ) {
-    console.log('entre a comparar fechas de elementos');
-    if ( a.fecha_deadline < b.fecha_deadline ){
-      return -1;
-      console.log('di una respuesta -1 en la comparación');
-    }
-    if ( a.fecha_deadline > b.fecha_deadline ){
-      return 1;
-      console.log('di respuesta 1 en comparacion');
-    }
-    return 0;
-    console.log('di respuesta 0 en comparación - significa uqe son iguiales');
-};
-*/
 function hoy_en_formato_de_fecha_almacenable(){
 
     // Variable con la fecha de hoy
@@ -1122,7 +1092,7 @@ $('#inicio main form').on('vclick','div', function(){
 
 //Cuando se abre la app, no renderea las vistas de tableros ocultos para mejorar la eficiencia
 //En este caso, si el usuario quiere volver a ingresar desde la papelera, entonces tengo que crear las vistas
-$('#ajustes main').on('click','#lista_de_borradores a',function(){
+$('#ajustes main').on('vclick','#lista_de_borradores a',function(){
     
     console.log('hiciste click a un tablero en papelera, me quiero asegurar de que la vista exista');
     var id_de_la_vista_buscada = $(this).attr('href');

@@ -38,7 +38,7 @@ vista 1 - Bienvenida
 ******************************************************************************************
 -->
     <div data-role="page" id="bienvenida">
-<!-- 
+        <!-- 
         <header data-role="header">
 
             <div class="degrade_de_fondo_header"></div>
@@ -55,27 +55,36 @@ vista 1 - Bienvenida
 
             <!-- logeo -->
             <div id="logueo">
-                <h1><img src="imgs/Logo_queen.svg" alt="Logo de la aplicación QUEEN" class="imagen_bienvenida"><br> ¡Hola!</h1>
+                <h1><img src="imgs/Logo_queen.svg" alt="Logo de la aplicación QUEEN" class="imagen_bienvenida"><br>
+                    ¡Hola!</h1>
                 <p id="msj_login">Para comenzar a usar Queen debes acceder con tu cuenta.</p>
                 <p id="msj_response_login"></p>
                 <form id="formulario_acceder_cuenta_existente">
-                    <label>Correo electrónico:<input type="email" name="correo" id="login_correo" placeholder="juan@correo.com.ar" required></label>
-                    <label>Contraseña:<input type="password" name="contrasena" id="login_contrasena" required minlength="5"></label>
+                    <label>Correo electrónico:<input type="email" name="correo" id="login_correo"
+                            placeholder="juan@correo.com.ar" required></label>
+                    <label>Contraseña:<input type="password" name="contrasena" id="login_contrasena" required
+                            minlength="5"></label>
                     <button type="submit" class="ui-btn-active">Acceder</button>
                 </form>
                 <form id="formulario_crear_cuenta" class="ocultar">
-                    <label>Correo electrónico: <input type="email" name="correo" id="crear_correo" placeholder="juan@correo.com.ar" required></label>
-                    <label>Contraseña: <input type="password" name="contrasena" id="crear_contrasena" required minlength="5"></label>
-                    <label>Repetir contraseña: <input type="password" name="contrasena" id="repetir_contrasena" required minlength="5"></label>
+                    <label>Correo electrónico: <input type="email" name="correo" id="crear_correo"
+                            placeholder="juan@correo.com.ar" required></label>
+                    <label>Contraseña: <input type="password" name="contrasena" id="crear_contrasena" required
+                            minlength="5"></label>
+                    <label>Repetir contraseña: <input type="password" name="contrasena" id="repetir_contrasena" required
+                            minlength="5"></label>
                     <p id="mensaje_error_repetir_contrasena" class="ocultar">Las contraseñas deben coincidir.</p>
                     <button type="submit" class="ui-btn-active">Crear</button>
                 </form>
 
-                <p id="msj_mas_informacion" class="ocultar">Estás a un paso de comenzar. Por favor, coméntanos un poco más sobre ti.</p>
+                <p id="msj_mas_informacion" class="ocultar">Estás a un paso de comenzar. Por favor, coméntanos un poco
+                    más sobre ti.</p>
 
                 <form id="formulario_mas_informacion" class="ocultar">
-                    <label>Nombre: <input type="text" name="nombre" id="crear_nombre" placeholder="Juan" required></label>
-                    <label>Apellido: <input type="text" name="apellido" id="crear_apellido" placeholder="Pérez" required></label>
+                    <label>Nombre: <input type="text" name="nombre" id="crear_nombre" placeholder="Juan"
+                            required></label>
+                    <label>Apellido: <input type="text" name="apellido" id="crear_apellido" placeholder="Pérez"
+                            required></label>
                     <button type="submit" class="ui-btn-active">Siguiente</button>
                 </form>
 
@@ -85,12 +94,14 @@ vista 1 - Bienvenida
             <!-- Mensaje de bienvenida -->
             <div id="msj_bienvenida" class="ocultar">
                 <h1><img src="imgs/icons/avatar.svg" alt="Imagen de usuario" class="imagen_bienvenida">
-                <br> Bienvenido </h1>
-                <p><strong>Queen</strong> es una herramienta de gestión personal. <br> Aquí podras hacer <strong>tableros</strong> con notas y listas de tareas. <br> A tu contenido podrás asignarle un estado y una fecha límite.</p>
+                    <br> Bienvenido </h1>
+                <p><strong>Queen</strong> es una herramienta de gestión personal. <br> Aquí podras hacer
+                    <strong>tableros</strong> con notas y listas de tareas. <br> A tu contenido podrás asignarle un
+                    estado y una fecha límite.</p>
                 <a href="#inicio" data-role="button" class="ui-btn-active" id="bienvenida_comenzar">¡Comenzar!</a>
             </div>
 
-            
+
 
         </main>
 
@@ -131,11 +142,11 @@ vista 2 - INICIO
                 <h2>No tenés tareas programadas para hoy</h2>
             </div>
 
-            <form>
+            <form data-filter="true" data-input="#buscador_de_inicio">
             </form>
             <!-- Listview por javascript - se crean los elementos que tenga para hacer hoy-->
             <!-- <ul data-role="listview" data-filter="true" data-input="#buscador_de_inicio"> -->
-                <!-- 
+            <!-- 
                     Modelo de datos del listview de inicio
                 <li class="ui-li-icon">
                     <a href="">
@@ -215,7 +226,7 @@ vista 3 - TABLEROS
 
 
                 <div class="ui-grid-a">
-                    <div class="ui-block-a">
+                    <div class="ui-block-a" data-filter="true" data-input="#buscador_de_tableros">
                         <!-- inicio bloque del lado izq de la gallery -->
 
                         <!-- Esquema de HTML del tablero
@@ -247,7 +258,7 @@ vista 3 - TABLEROS
 
  -->
                     </div>
-                    <div class="ui-block-b">
+                    <div class="ui-block-b" data-filter="true" data-input="#buscador_de_tableros">
                     </div>
 
                 </div>
@@ -278,7 +289,8 @@ vista 3 - TABLEROS
             <div data-role="navbar">
                 <ul>
                     <li><a href="#inicio" data-icon="hoy">Mi día</a></li>
-                    <li><a href="#tableros" data-icon="tableros" class="ui-btn-active ui-state-persist">Tableros</a></li>
+                    <li><a href="#tableros" data-icon="tableros" class="ui-btn-active ui-state-persist">Tableros</a>
+                    </li>
                     <!-- <li><a href="#calendario" data-icon="calendario">Calendario</a></li>-->
                     <li><a href="#ajustes" data-icon="ajustes">Ajustes</a></li>
                 </ul>
@@ -315,6 +327,7 @@ vista 4 - Ajustes
             <!-- Popup buscador -->
             <div class="header_buscador" id="ajustes_buscador" data-role="popup" data-history="false">
                 <form>
+                    <!-- Por ahora solo busca tableros en papelera -->
                     <input data-type="search" id="buscador_de_ajustes" placeholder="¿Qué buscas?">
                 </form>
             </div>
@@ -330,13 +343,9 @@ vista 4 - Ajustes
 
 
             <!-- 
-            Acá se debe visualizar los tablero ocultados, se deben poder recuperar o borrar
-
-         -->
-
-            <ul data-role="listview" data-filter="true" data-input="#buscador_de_ajusts">
-                <!-- esto se rellena desde js -->
-            </ul>
+            <ul data-role="listview" data-filter="true" data-input="#buscador_de_ajustes"> -->
+            <!-- esto se rellena desde js -->
+            <!--</ul> -->
 
             <div class="botones_de_acciones" data-role="controlgroup">
 
@@ -348,9 +357,14 @@ vista 4 - Ajustes
                 <a href="#popup_confirmacion_borrar" data-rel="popup" data-position-to="window"
                     class="ui-btn ui-shadow boton_eliminar color_rojo">Borrar caché</a>
 
-                <div data-role="collapsible" id="lista_de_borradores">
+                <div data-role="collapsible" id="lista_de_borradores" data-filter="true"
+                    data-input="#buscador_de_ajustes">
                     <h2>Tableros en borrador</h2>
 
+                    <!-- 
+            Acá se visualizan los tablero ocultados, se pueden acceder para borrarlos definitivamente o recuperarlos
+
+         -->
 
 
                 </div>
@@ -402,14 +416,14 @@ vista 4 - Ajustes
                     </div>
                 <div role="main" class="ui-content">
                         <h2 class="ui-title">¿Está seguro de borrar el caché?</h2>
-                        <p>Esto borrará la información almacenada de la aplicación. Esta acción no se puede deshacer.
-                    </p>
-                            <a href="#" class="ui-btn ui-corner-all ui-shadow ui-btn-inline ui-btn-b"
-                        data-rel="back">Cancelar</a>
-                            <a href="#" id="borrar_todo"
-                        class="ui-btn ui-corner-all ui-shadow ui-btn-inline ui-btn-b color_rojo"
-                        data-transition="flow">Borrar</a>
-                        </div>
+                    <p>Esto borrará la información almacenada de la aplicación. Esta acción no se puede deshacer.
+                </p>
+                        <a href="#" class="ui-btn ui-corner-all ui-shadow ui-btn-inline ui-btn-b"
+                    data-rel="back">Cancelar</a>
+                        <a href="#" id="borrar_todo"
+                    class="ui-btn ui-corner-all ui-shadow ui-btn-inline ui-btn-b color_rojo"
+                    data-transition="flow">Borrar</a>
+                    </div>
         </div>
 
 
