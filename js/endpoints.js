@@ -34,7 +34,7 @@ function ep_login(correo_usuario, contrasena){
     })
     .fail(function(response) {
         console.log('falló en logueo. Mensaje del servidor:');
-        console.log(response.mensaje);
+        console.log(JSON.parse(response).mensaje);
 
         $("#msj_response_login").text("Usuario o contraseña incorrectos.");
         $('#loader_bienvenida').addClass('ocultar');
@@ -72,7 +72,7 @@ function ep_datos_usuario(usuario){
 
     }).fail(function(response){
         console.log('falló obtener datos de usuario. Mensaje del servidor:');
-        console.log(response.mensaje);
+        console.log(JSON.parse(response).mensaje);
     });
 };
 
@@ -96,7 +96,7 @@ function ep_crear_usuario (correo_usuario, contrasena_usuario, nombre_usuario, a
     })
     .fail(function(response) {
         console.log('falló en crear usuario. Mensaje del servidor:');
-        console.log(response.mensaje);
+        console.log(JSON.parse(response).mensaje);
 
         //este correo estaba usado, falló la creación
         $("#msj_response_login").text("El correo está en uso. Pruebe con uno diferente, o intente loguear a su cuenta");
@@ -146,7 +146,13 @@ function ep_cargar_tablero(correo_usuario, datos_a_cargar){
             //return response.id_tablero;
         }else{
             //El tablero existía, solo tenía que actualizarlo
-            
+
+            for(var y in objeto_maestro_datos.tableros){
+                if (objeto_maestro_datos.tableros[y].id_tablero == datos_a_cargar.id_tablero){
+                    objeto_maestro_datos.tableros[y] = datos_a_cargar;
+                };
+            };
+
             //Guardo en local
             guardar_datos_en_localstorage();
             
@@ -157,7 +163,7 @@ function ep_cargar_tablero(correo_usuario, datos_a_cargar){
     })
     .fail(function(response) {
         console.log('falló la carga del tablero. Mensaje del servidor:');
-        console.log(response.mensaje);
+        console.log(JSON.parse(response).mensaje);
         $.mobile.navigate('#inicio');
         //return -1;
     });
@@ -175,9 +181,8 @@ function ep_cargar_elemento(correo_usuario, objeto_de_elemento){
             console.log('recibí el id del tablero: ');
             console.log(response);
     
-            objeto_de_elemento.id_elemento = response.id_tablero;
+            objeto_de_elemento.id_elemento = response.id_elemento;
     
-
             //Lo guardo en el obj maestro de datos
             objeto_maestro_datos.elementos[objeto_maestro_datos.elementos.length] = objeto_de_elemento;
 
@@ -188,7 +193,11 @@ function ep_cargar_elemento(correo_usuario, objeto_de_elemento){
 
         }else{
             //El tablero existía, solo tenía que actualizarlo
-            //En principio no hag nada
+            for(var z in objeto_maestro_datos.elementos){
+                if (objeto_maestro_datos.elementos[z].id_elemento == objeto_de_elemento.id_elemento){
+                    objeto_maestro_datos.elementos[z] = objeto_de_elemento;
+                };
+            };
         };
         
         //Guardo en local
@@ -201,7 +210,7 @@ function ep_cargar_elemento(correo_usuario, objeto_de_elemento){
     })
     .fail(function(response) {
         console.log('falló en cargar un elemento. Mensaje del servidor:');
-        console.log(response.mensaje);
+        console.log(JSON.parse(response).mensaje);
     });
 };
 
@@ -219,7 +228,7 @@ function ep_eliminar_elemento(correo_usuario, id_tablero){
     })
     .fail(function(response) {
         console.log('falló en eliminar el elemento. Mensaje del servidor:');
-        console.log(response.mensaje);
+        console.log(JSON.parse(response).mensaje);
         //return -1;
     });
 };
@@ -259,7 +268,7 @@ function ep_eliminar_tablero(correo_usuario, id_tablero){
     })
     .fail(function(response) {
         console.log('falló en eliminar el tablero. Mensaje del servidor:');
-        console.log(response.mensaje);
+        console.log(JSON.parse(response).mensaje);
         //return -1;
     });
 };

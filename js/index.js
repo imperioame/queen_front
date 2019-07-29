@@ -424,7 +424,7 @@ function crear_vista_de_tablero(objeto_tablero, forzar_creacion){
 
             //Populo el tablero:
             for (i in objeto_maestro_datos.elementos){
-                if( objeto_maestro_datos.elementos[i].id_tablero === objeto_tablero.id_tablero){
+                if( objeto_maestro_datos.elementos[i].id_tablero == objeto_tablero.id_tablero){
                     crear_contenido_en_vista_de_tablero(objeto_maestro_datos.elementos[i]);
                 };
             };
@@ -466,7 +466,7 @@ function cargar_elementos_en_inicio(){
         var el_tablero_esta_oculto;
         //Averiguo si el tablero al que pertenece este elemento es oculto o no
         for(j in array_de_tableros){
-            if(array_de_tableros[j].id_tablero === array_de_elementos[i].id_tablero){
+            if(array_de_tableros[j].id_tablero == array_de_elementos[i].id_tablero){
 
                 el_tablero_esta_oculto = array_de_tableros[j].es_oculto == 1;
                 console.log('encontré un elemento del tablero' + array_de_tableros[j].id_tablero);
@@ -478,7 +478,7 @@ function cargar_elementos_en_inicio(){
         if(!el_tablero_esta_oculto){
 
             //por cada elemento pregunto si la fecha_deadline eento pregunto si la fecha_deadline es hoy (con la función hoy_en_formato_de_fecha_almacenable())
-            if(array_de_elementos[i].fecha_deadline === hoy_en_formato_de_fecha_almacenable()){
+            if(array_de_elementos[i].fecha_deadline == hoy_en_formato_de_fecha_almacenable()){
                 console.log('encontré un elemento que vence hoy');
                 
                 //formateo el id del tablero al que corresponde este elemento:
@@ -634,7 +634,7 @@ function procesar_tableros_en_vista_de_tableros(){
                 //Ahora recorro el array de elementos, e inyecto los que tengna el id de este tablero
 
                 for (j in objeto_maestro_datos.elementos){
-                    if(objeto_maestro_datos.elementos[j].id_tablero === objeto_maestro_datos.tableros[i].id_tablero){
+                    if(objeto_maestro_datos.elementos[j].id_tablero == objeto_maestro_datos.tableros[i].id_tablero){
                         //Solo me interesan los elementos que tengan este mismo id
                         console.log('encontré un elmeneto de este tablero');
 
@@ -853,7 +853,7 @@ $(document).on('pagebeforeshow', function(){
 //Para saber un título de tablero a partir de un id
 function cual_es_el_titulo(array_de_tableros_a_buscar, id_buscado){
     for(j in array_de_tableros_a_buscar){
-        if(array_de_tableros_a_buscar[j].id_tablero === id_buscado){
+        if(array_de_tableros_a_buscar[j].id_tablero == id_buscado){
             return array_de_tableros_a_buscar[j].titulo;
         }
     }
