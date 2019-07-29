@@ -172,12 +172,15 @@ function ep_cargar_elemento(correo_usuario, objeto_de_elemento){
         if(objeto_de_elemento.id_elemento == -1){
             //tenía uqe cargar uno nuevo, entonces:
             $('#titulo_tablero').val('');
-            response = JSON.parse(response);
             console.log('recibí el id del tablero: ');
             console.log(response);
     
             objeto_de_elemento.id_elemento = response.id_tablero;
     
+
+            //Lo guardo en el obj maestro de datos
+            objeto_maestro_datos.elementos[objeto_maestro_datos.elementos.length] = objeto_de_elemento;
+
             //Llamo a las funciones creadoras
             crear_contenido_en_vista_de_tablero(objeto_de_elemento);
         
@@ -212,7 +215,7 @@ function ep_eliminar_elemento(correo_usuario, id_tablero){
         borrar_elementos_del_sistema(id_tablero);
 
         //Ahora borro el tablero en bd y local
-        ep_eliminar_tablero(correo_usuario. id_tablero);
+        ep_eliminar_tablero(correo_usuario, id_tablero);
     })
     .fail(function(response) {
         console.log('falló en eliminar el elemento. Mensaje del servidor:');

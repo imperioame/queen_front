@@ -38,21 +38,8 @@ function crear_contenido_en_vista_de_tablero(objeto_de_elementos){
         
     //me fijo si es elemento de una lista, o solo texto
     if (objeto_de_elementos.es_lista == 1){
-        //es elemento de una lista, en principio me fijo si hay una ul
-/*
+        //es elemento de una lista (checkbox), en principio me fijo si hay una fieldset 
 
-    //Cambio esto por FORM - para que funcionen los checkbox
-
-        if( !$('#' + id_del_tablero +' main ul').length){
-            console.log('no encontró lista');
-
-            //creo lista y la inyecto
-            var nuevo_ul = '<ul class="tablero_Particular_listview"></ul>';
-            $('#' + id_del_tablero +' main').append(nuevo_ul);
-            //Refresheo la listview
-            $('#' + id_del_tablero +' main .tablero_Particular_listview').listview();
-        };
-*/
         if( !$('#' + id_del_tablero +' main form fieldset').length){
             console.log('no encontró form con fieldset');
 
@@ -61,7 +48,6 @@ function crear_contenido_en_vista_de_tablero(objeto_de_elementos){
             $('#' + id_del_tablero +' main').append(nuevo_fieldset);
         };
 
-        //Me aseguré de que exista un ul
         //Ahora meto el contenido
         var status_es_nulo = (objeto_de_elementos.status === '') || (objeto_de_elementos.status === undefined) || (objeto_de_elementos.status === null);
         var texto_status = '';
@@ -143,6 +129,11 @@ function crear_contenido_en_vista_de_tablero(objeto_de_elementos){
         //$('#' + id_del_tablero +' main form').enhanceWithin();
         //$('#' + id_del_tablero +' main form fieldset').trigger('create');
         console.log('cargue un checkbox nuevo');
+
+        //Me fijo si está realizado o no, si lo está, lo marco tildado
+        if(objeto_de_elementos.realizado == 1){
+            $('#' + id_del_tablero +' main form fieldset #checkbox_elemento_'+ objeto_de_elementos.id_tablero +'_'+ objeto_de_elementos.indice_elemento).attr("checked",true).checkboxradio("refresh");
+        };
 
 
         /*
@@ -379,7 +370,7 @@ function crear_vista_de_tablero(objeto_tablero, forzar_creacion){
                     dismissible: false,
                     overlyaTheme: "b",
                     transition: "pop"
-                }).on("popupafterclose", function () {
+                }).on('popupafterclose', function () {
                     //remove the popup when closing
                     $(this).remove();
                 }).css({
@@ -411,7 +402,7 @@ function crear_vista_de_tablero(objeto_tablero, forzar_creacion){
                     inline: false,
                     mini: true,
                     icon: "check"
-                }).on("click", function () {
+                }).on('click', function () {
                     $popUp.popup("close");
                     //that.subscribeToAsset(callback);
                 }).appendTo($popUp);
@@ -518,7 +509,8 @@ function cargar_elementos_en_inicio(){
                                     <label for="checkbox_` + id_tablero_string + array_de_elementos[i].indice_elemento +`" class="listview_inicio_bloque_de_texto">\n
                                             <h2>` + array_de_elementos[i].contenido + `</h2>\n
                                             <p>En: ` + titulo_del_tablero_perteneciente + `</p>\n
-                                            <p class="ocultar">#` + id_tablero_string + `</p>\n
+                                            <p class="ocultar clase_id_tablero_string_para_inicio">#` + id_tablero_string + `</p>\n
+                                            <p class="ocultar clase_id_elemento_para_inicio">`+ array_de_elementos[i].id_elemento +`<p>\n
                                     </label>\n
                                     <!-- <div class="ui-li-aside listview_inicio_estado ` + clase_del_status +`">\n
                                     <p>`+ caracter_status +`</p> -->\n
@@ -527,6 +519,11 @@ function cargar_elementos_en_inicio(){
 
                 //Lo inyecto
                 $('#inicio main form').append(elemento_para_inicio).enhanceWithin();
+
+                //Me fijo si está realizado o no, si lo está, lo marco tildado
+                if(array_de_elementos[i].realizado == 1){
+                    $('#' + id_del_tablero +' main form fieldset #checkbox_' + id_tablero_string + array_de_elementos[i].indice_elemento).attr("checked",true).checkboxradio("refresh");
+                };
 
                 //también tengo que ocultar el aviso_de_vista_vacia
                 $('#inicio main #dia_libre').addClass('ocultar');
@@ -894,7 +891,7 @@ function obtener_objeto_tablero_a_partir_de_texto_id(texto_id_buscado){
 
     for(var k in objeto_maestro_datos.tableros){
         console.log('entre al bucle a buscar el tablero con id correspondiente');
-        if(objeto_maestro_datos.tableros[k].id_tablero === id_numerico){
+        if(objeto_maestro_datos.tableros[k].id_tablero == id_numerico){
             console.log('encontre tablero correcto');
             return objeto_maestro_datos.tableros[k];
         }
@@ -958,7 +955,7 @@ Comportamientos de la interfáz
 -------------------------------------------------------------------------------------------------------
 */ 
 
-$(document).on("ready", function () {
+$(document).on('ready', function () {
     $.mobile.defaultPageTransition = 'fade';
     $.mobile.defaultDialogTransition = 'pop';
 });
@@ -1065,10 +1062,35 @@ $('.menu_agregar_tablero .bajar').on('vclick', function(){
 
 
 //Comportamiento longpress de los elementos del tablero de inicio
-$('#inicio main ul').on('taphold', 'li', function(){
+$('#inicio main form').on('taphold', 'div', function(){
     console.log('longpreseaste un item en inicio, te quiero llevar a:');
-    console.log($(this).find('.ocultar').text());
-    $.mobile.navigate($(this).find('.ocultar').text());
+    console.log($(this).find('.clase_id_tablero_string_para_inicio').text());
+    $(this).children('input:checkbox').attr("checked",false).checkboxradio("refresh");
+    $.mobile.navigate($(this).find('.clase_id_tablero_string_para_inicio').text());
+});
+
+
+//Chequeo de elementos de los elementos del tablero de inicio
+$('#inicio main form').on('vclick','div', function(){
+    console.log('marcaste como realizado un elemento en inicio');
+    //detecto a que elemento le corresponde:
+    var id_elemento_detectado = $(this).find('.clase_id_elemento_para_inicio').text();
+    
+    for(i in objeto_maestro_datos.elementos){
+        console.log('busco al elemento en el objeto maestro');
+        if(objeto_maestro_datos.elementos[i].id_elemento == id_elemento_detectado){
+            console.log('encontré el elemento, actualizo su estaod y mando a guardar');
+            if($(this).children('input:checkbox').attr("checked")){
+                objeto_maestro_datos.elementos[i].realizado = 1;
+            }else{
+                objeto_maestro_datos.elementos[i].realizado = 0;
+            }
+            //actualizo en bd y local
+            ep_cargar_elemento(objeto_maestro_usuario.correo, objeto_maestro_datos.elementos[i]);
+        };
+    };
+
+    
 });
 
 
@@ -1122,10 +1144,11 @@ $('body').on('vclick','.fijar',function(){
     //Busco el tablero en el objeto maestro de datos y le cambio su valor de "es_destacado"
     for(i in objeto_maestro_datos.tableros){
         //Busco el tablero que corresponda:
-        if(objeto_maestro_datos.tableros[i].id_tablero === id_tablero_a_buscar){
-            
+        console.log('recorro');
+        if(objeto_maestro_datos.tableros[i].id_tablero == id_tablero_a_buscar){
+            console.log('encontré');
             //Averiguo si YA estaba destacado. Si es así, entonce lo saco del destacado
-            if(objeto_maestro_datos.tableros[i].es_destacado ==1){
+            if(objeto_maestro_datos.tableros[i].es_destacado == 1){
                 objeto_maestro_datos.tableros[i].es_destacado = 0;
             }else{
                 objeto_maestro_datos.tableros[i].es_destacado = 1;
@@ -1152,7 +1175,7 @@ $('body').on('vclick','.descartar',function(){
 
     //Busco el tablero en el objeto maestro de datos y le cambio su valor de "es_oculto"
     for(i in objeto_maestro_datos.tableros){
-        if(objeto_maestro_datos.tableros[i].id_tablero === id_tablero_a_buscar){
+        if(objeto_maestro_datos.tableros[i].id_tablero == id_tablero_a_buscar){
             console.log('encontre tablero. Averiguo si lo tengo que ocultar o mostrar');
             if(objeto_maestro_datos.tableros[i].es_oculto == 1){
                 //Lo tengo que mostrar
@@ -1366,8 +1389,10 @@ $('body').on('submit', '.tablero_particular .menu_agregar_elemento form',functio
     //la forma más facil es detectar preguntar al objeto maestro
     var indice_elemento = 0;
     for (i in objeto_maestro_datos.elementos){
-        if(objeto_maestro_datos.elementos[i].id_tablero === id_tablero_para_guardar){
+        //console.log('iteración bucle para buscar id del tablero al que corresponde este elemento y sus elementos');
+        if(objeto_maestro_datos.elementos[i].id_tablero == id_tablero_para_guardar){
             indice_elemento++;
+            //console.log('encontré elemento del tablero al que corresponde. la nueva pos es: '+indice_elemento);
         }
     };
 
@@ -1407,6 +1432,7 @@ $('body').on('submit', '.tablero_particular .menu_agregar_elemento form',functio
         indice_elemento: indice_elemento,
         id_tablero: id_tablero_para_guardar,
         es_lista: es_lista,
+        realizado: 0,
         contenido: contenido,
         status: status,
         fecha_deadline: deadline,
