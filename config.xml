@@ -3,7 +3,7 @@
 <widget xmlns     = "http://www.w3.org/ns/widgets"
         xmlns:gap = "http://phonegap.com/ns/1.0"
         id        = "ar.com.distritografico.queen"
-        version   = "0.1.0">
+        version   = "1.0.0">
 
     <name>Queen - Organizador personal</name>
 
@@ -81,7 +81,7 @@
     <gap:splash src="res/screen/windows-phone/screen-portrait.jpg" 
 		gap:platform="winphone" />
 
-	<access /> 	
+	<access origin="*"/> 	
 	
     <plugin name="cordova-plugin-whitelist" version="1" />
     <allow-intent href="http://*/*" />

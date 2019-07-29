@@ -66,6 +66,11 @@
 }
 
 .ui-icon-agregar:after {
+    background-image: url(../imgs/icons/mas_alt.svg);
+    background-size: 18px;
+}
+
+.ui-icon-agregar_alt:after {
     background-image: url(../imgs/icons/mas.svg);
     background-size: 18px;
 }
