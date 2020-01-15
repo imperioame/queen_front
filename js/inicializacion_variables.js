@@ -34,22 +34,22 @@ function inicializar_variables(){
     //Rutas de los endpoints 
     ********************************************************************
     */
-    url_ep_login = 'http://id.distritografico.com.ar/queen_back/login.php';
-    url_ep_crear_usuario = 'http://id.distritografico.com.ar/queen_back/crear_usuario.php';
-    url_ep_cargar_tablero = 'http://id.distritografico.com.ar/queen_back/cargar_tablero.php';
-    url_ep_datos_usuario = 'http://id.distritografico.com.ar/queen_back/datos_usuario.php';
-    url_ep_cargar_elemento = 'http://id.distritografico.com.ar/queen_back/cargar_elemento.php';
-    url_ep_eliminar_tablero = 'http://id.distritografico.com.ar/queen_back/eliminar_tablero.php'
-    url_ep_eliminar_elemento = 'http://id.distritografico.com.ar/queen_back/eliminar_elemento.php'
+    url_ep_login = 'http://id.distritografico.com.ar/queen_back/php/login.php';
+    url_ep_crear_usuario = 'http://id.distritografico.com.ar/queen_back/php/crear_usuario.php';
+    url_ep_cargar_tablero = 'http://id.distritografico.com.ar/queen_back/php/cargar_tablero.php';
+    url_ep_datos_usuario = 'http://id.distritografico.com.ar/queen_back/php/datos_usuario.php';
+    url_ep_cargar_elemento = 'http://id.distritografico.com.ar/queen_back/php/cargar_elemento.php';
+    url_ep_eliminar_tablero = 'http://id.distritografico.com.ar/queen_back/php/eliminar_tablero.php'
+    url_ep_eliminar_elemento = 'http://id.distritografico.com.ar/queen_back/php/eliminar_elemento.php'
     // ********************** Rutas localhost ********************** //
     /*
-    url_ep_login = 'localhost/queen_back/php/login.php';
-    url_ep_crear_usuario = 'localhost/queen_back/php/crear_usuario.php';
-    url_ep_cargar_tablero = 'localhost/queen_back/php/cargar_tablero.php';
-    url_ep_datos_usuario = 'localhost/queen_back/php/datos_usuario.php';
-    url_ep_cargar_elemento = 'localhost/queen_back/php/cargar_elemento.php';
-    url_ep_eliminar_tablero = 'localhost/queen_back/php/eliminar_tablero.php'
-    url_ep_eliminar_elemento = 'localhost/queen_back/php/eliminar_elemento.php'
+    url_ep_login = 'localhost/queen_back/php/php/login.php';
+    url_ep_crear_usuario = 'localhost/queen_back/php/php/crear_usuario.php';
+    url_ep_cargar_tablero = 'localhost/queen_back/php/php/cargar_tablero.php';
+    url_ep_datos_usuario = 'localhost/queen_back/php/php/datos_usuario.php';
+    url_ep_cargar_elemento = 'localhost/queen_back/php/php/cargar_elemento.php';
+    url_ep_eliminar_tablero = 'localhost/queen_back/php/php/eliminar_tablero.php'
+    url_ep_eliminar_elemento = 'localhost/queen_back/php/php/eliminar_elemento.php'
     */
 
     i = 0;
